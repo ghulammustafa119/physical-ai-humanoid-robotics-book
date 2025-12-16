@@ -2,188 +2,228 @@
 
 ## Chapter 1: Gazebo Overview and Physics Simulation
 
-### Task 1.1: Introduction to Gazebo and Digital Twins
-- [ ] Write introduction explaining Gazebo's role as a digital twin
-- [ ] Document the concept of digital twins in robotics
-- [ ] Explain benefits of simulation for robotics development
-- [ ] Create conceptual diagram of simulation workflow
-- [ ] Verify content aligns with target audience level
+### Task 1.1: Write introduction to Gazebo and digital twin concepts
+- [ ] Define digital twin concept in robotics context
+- [ ] Explain Gazebo's role as a physics simulation platform
+- [ ] Describe benefits of simulation for humanoid robot development
+- [ ] Include conceptual overview of simulation-to-reality transfer
+- [ ] Ensure content targets advanced undergraduate/graduate CS/AI students
+- [ ] Format with clean section headers for RAG chunking
 
-### Task 1.2: Physics Engine Fundamentals
-- [ ] Document gravity simulation in Gazebo
-- [ ] Explain collision detection and response
-- [ ] Describe joint physics and constraints
-- [ ] Create simple physics example with falling objects
-- [ ] Verify physics parameters against Gazebo documentation
+### Task 1.2: Explain physics engine basics (gravity, collision, joints)
+- [ ] Document gravity simulation in Gazebo environment
+- [ ] Explain collision detection and response mechanisms
+- [ ] Describe joint physics and constraint systems
+- [ ] Provide examples of physics parameters and their impact
+- [ ] Include configuration examples for humanoid robot joints
+- [ ] Verify technical accuracy against Gazebo documentation
 
-### Task 1.3: Humanoid Robot Simulation Setup
-- [ ] Document step-by-step setup process
-- [ ] Create example world file for humanoid simulation
-- [ ] Explain URDF integration with Gazebo physics
-- [ ] Provide configuration examples for humanoid joints
-- [ ] Test setup with basic humanoid model
+### Task 1.3: Provide small humanoid robot simulation example
+- [ ] Create minimal URDF model for humanoid robot
+- [ ] Write Gazebo world file with physics environment
+- [ ] Provide ROS 2 launch file for simulation setup
+- [ ] Include Python example using rclpy to interact with simulation
+- [ ] Test example in Gazebo environment
+- [ ] Document setup requirements and dependencies
 
-### Task 1.4: Physics Parameters and Configuration
-- [ ] Document key physics parameters (time step, solver, etc.)
-- [ ] Explain parameter impact on simulation accuracy
-- [ ] Create performance vs accuracy trade-off examples
-- [ ] Provide best practices for parameter selection
-- [ ] Validate examples in Gazebo environment
+### Task 1.4: Include textual diagrams for environment setup
+- [ ] Create textual representation of Gazebo simulation architecture
+- [ ] Document world file structure with examples
+- [ ] Provide visual description of robot-environment interactions
+- [ ] Include physics parameter configuration diagrams
+- [ ] Ensure diagrams are conceptual and not decorative
+- [ ] Format diagrams for RAG compatibility
 
-### Task 1.5: Chapter 1 Completion and Validation
-- [ ] Complete chapter with summary and key takeaways
+### Task 1.5: Chapter 1 completion and validation
 - [ ] Ensure chapter length is 800-1200 words
-- [ ] Verify clean section headers for RAG readiness
-- [ ] Test all examples in Gazebo environment
-- [ ] Review for technical accuracy
+- [ ] Verify all Python examples use rclpy with ROS 2
+- [ ] Check RAG-ready header structure
+- [ ] Validate technical accuracy against Gazebo documentation
+- [ ] Review for target audience appropriateness
+- [ ] Confirm no Module 3+ content is included
 
 ## Chapter 2: Sensor Simulation in Gazebo
 
-### Task 2.1: LiDAR Sensor Integration
+### Task 2.1: Explain LiDAR, Depth Camera, and IMU sensors
 - [ ] Document LiDAR physics simulation principles
-- [ ] Create LiDAR sensor configuration example
-- [ ] Explain ray tracing and obstacle detection
-- [ ] Provide realistic parameter settings (range, resolution, noise)
-- [ ] Map LiDAR output to ROS 2 sensor_msgs/LaserScan
+- [ ] Explain depth camera optical simulation in Gazebo
+- [ ] Describe IMU physics and noise modeling
+- [ ] Compare sensor characteristics and use cases
+- [ ] Provide realistic parameter ranges for humanoid robots
+- [ ] Include sensor fusion concepts
 
-### Task 2.2: Depth Camera Simulation
-- [ ] Explain depth camera physics and optics
-- [ ] Create depth camera configuration example
-- [ ] Document calibration parameters and distortion
-- [ ] Map depth camera output to ROS 2 sensor_msgs/Image
-- [ ] Provide point cloud generation from depth data
+### Task 2.2: Provide Python + ROS 2 rclpy snippets to publish/subscribe sensor data
+- [ ] Create LiDAR data subscriber example using rclpy
+- [ ] Write depth camera data processing example
+- [ ] Develop IMU data subscriber with orientation calculation
+- [ ] Include multi-sensor fusion example
+- [ ] Test all examples with simulated sensors
+- [ ] Ensure examples follow ROS 2 best practices
 
-### Task 2.3: IMU Simulation
-- [ ] Document IMU physics simulation (accelerometer, gyroscope)
-- [ ] Create IMU sensor configuration with noise models
-- [ ] Explain integration with robot dynamics
-- [ ] Map IMU output to ROS 2 sensor_msgs/Imu
-- [ ] Provide example of IMU data processing
+### Task 2.3: Textual visualization of sensor outputs
+- [ ] Create conceptual diagrams for LiDAR scan visualization
+- [ ] Document depth image processing techniques
+- [ ] Explain IMU orientation calculation and visualization
+- [ ] Provide Python examples for sensor data visualization
+- [ ] Include performance considerations for real-time processing
+- [ ] Format visualizations for RAG compatibility
 
-### Task 2.4: ROS 2 Topic Mapping
-- [ ] Document standard ROS 2 message types for sensors
-- [ ] Create Python example using rclpy to subscribe to sensor data
-- [ ] Explain sensor data acquisition patterns
-- [ ] Provide visualization tools for sensor outputs
-- [ ] Test sensor integration with ROS 2
+### Task 2.4: Ensure examples align with RAG-ready headers
+- [ ] Structure content with clear, descriptive headers
+- [ ] Use consistent header hierarchy (#, ##, ###)
+- [ ] Ensure headers are self-descriptive without context
+- [ ] Optimize content chunks for semantic search
+- [ ] Verify header formatting doesn't interfere with code blocks
+- [ ] Test content structure for RAG indexing
 
-### Task 2.5: Chapter 2 Completion and Validation
-- [ ] Complete chapter with sensor comparison and use cases
+### Task 2.5: Chapter 2 completion and validation
 - [ ] Ensure chapter length is 800-1200 words
-- [ ] Verify clean section headers for RAG readiness
-- [ ] Test all sensor examples in Gazebo environment
-- [ ] Review for technical accuracy
+- [ ] Verify all Python examples use rclpy with ROS 2
+- [ ] Check RAG-ready header structure
+- [ ] Validate sensor simulation accuracy against Gazebo documentation
+- [ ] Review for target audience appropriateness
+- [ ] Confirm no Module 3+ content is included
 
 ## Chapter 3: Unity for High-Fidelity Interaction
 
-### Task 3.1: Unity Environment Setup
-- [ ] Document Unity installation and ROS integration setup
-- [ ] Explain Unity ROS TCP Connector or similar bridge
-- [ ] Create basic Unity scene with robot visualization
-- [ ] Provide step-by-step environment configuration
+### Task 3.1: Introduce Unity environment setup for humanoid robots
+- [ ] Document Unity installation and configuration for robotics
+- [ ] Explain Unity ROS TCP Connector setup and configuration
+- [ ] Describe project structure for robotics applications
+- [ ] Include asset import and configuration procedures
+- [ ] Provide performance optimization guidelines
 - [ ] Test basic Unity-ROS connection
 
-### Task 3.2: Rendering Humanoid Robots
-- [ ] Document importing robot models into Unity
-- [ ] Create realistic materials and textures for robots
-- [ ] Explain kinematic chain visualization
-- [ ] Provide animation and joint movement examples
-- [ ] Test rendering with humanoid model
+### Task 3.2: Show example of rendering humanoid robots and objects
+- [ ] Create material and shader examples for robot visualization
+- [ ] Document realistic material properties for robot components
+- [ ] Provide lighting setup for robotics environments
+- [ ] Include animation and joint movement examples
+- [ ] Test rendering performance with humanoid models
+- [ ] Document asset pipeline for robot models
 
-### Task 3.3: Human-Robot Interaction Simulation
-- [ ] Create interaction scenarios in Unity environment
-- [ ] Document UI elements for human-robot interaction
-- [ ] Provide examples of gesture and command simulation
-- [ ] Explain collision detection in Unity context
-- [ ] Test interaction scenarios
+### Task 3.3: Demonstrate simple human-robot interaction simulation conceptually
+- [ ] Design UI elements for human-robot interaction
+- [ ] Create gesture recognition system examples
+- [ ] Document command and control interfaces
+- [ ] Include safety and feedback mechanisms
+- [ ] Provide conceptual examples of interaction scenarios
+- [ ] Test interaction systems with basic robot control
 
-### Task 3.4: ROS 2 Integration in Unity
-- [ ] Document data exchange between Unity and ROS 2
-- [ ] Create Python examples for Unity communication
-- [ ] Explain message passing patterns
-- [ ] Provide debugging tools for Unity-ROS integration
-- [ ] Test integration with ROS 2 system
+### Task 3.4: Include textual description of high-fidelity interactions
+- [ ] Create textual diagrams for Unity scene architecture
+- [ ] Document interaction flow and user interface layouts
+- [ ] Explain rendering pipeline and performance considerations
+- [ ] Provide visualization examples for sensor data in Unity
+- [ ] Include networking and communication patterns
+- [ ] Format descriptions for RAG compatibility
 
-### Task 3.5: Chapter 3 Completion and Validation
-- [ ] Complete chapter with Unity vs Gazebo comparison
+### Task 3.5: Chapter 3 completion and validation
 - [ ] Ensure chapter length is 800-1200 words
-- [ ] Verify clean section headers for RAG readiness
-- [ ] Test Unity examples and integration
-- [ ] Review for technical accuracy
+- [ ] Verify Unity examples are conceptually accurate
+- [ ] Check RAG-ready header structure
+- [ ] Validate technical accuracy against Unity documentation
+- [ ] Review for target audience appropriateness
+- [ ] Confirm no Module 3+ content is included
 
 ## Chapter 4: Bridging Gazebo and Unity
 
-### Task 4.1: Data Exchange Pipeline Design
-- [ ] Document architecture for Gazebo-Unity bridge
-- [ ] Explain synchronization requirements
-- [ ] Create data flow diagrams for bridged system
-- [ ] Identify key data types for exchange
-- [ ] Design message formats and protocols
-
-### Task 4.2: Synchronization Mechanisms
-- [ ] Document time synchronization between environments
-- [ ] Create physics and visual data synchronization
-- [ ] Explain state consistency challenges
-- [ ] Provide solutions for synchronization issues
+### Task 4.1: Explain synchronization of physics and visual environments
+- [ ] Document time synchronization mechanisms between environments
+- [ ] Explain state consistency challenges and solutions
+- [ ] Provide examples of synchronization protocols
+- [ ] Include latency and performance considerations
+- [ ] Describe error correction and drift compensation
 - [ ] Test synchronization with example scenarios
 
-### Task 4.3: Performance Considerations
+### Task 4.2: Provide example pipeline for Gazebo→Unity data exchange
+- [ ] Create bridge architecture design with components
+- [ ] Write Python example for Gazebo data extraction
+- [ ] Develop Unity C# example for data reception
+- [ ] Implement data transformation and formatting
+- [ ] Include error handling and connection management
+- [ ] Test complete data exchange pipeline
+
+### Task 4.3: Discuss performance considerations
 - [ ] Document resource requirements for dual environments
-- [ ] Explain optimization strategies for performance
-- [ ] Provide guidelines for environment selection
-- [ ] Create performance benchmarking examples
-- [ ] Test performance with various scenarios
+- [ ] Explain optimization strategies for bridge performance
+- [ ] Provide benchmarking examples and metrics
+- [ ] Include network bandwidth and latency considerations
+- [ ] Describe scaling strategies for complex scenarios
+- [ ] Test performance with realistic workloads
 
-### Task 4.4: Debugging and Validation Tools
-- [ ] Create tools for bridged system validation
-- [ ] Document debugging strategies for bridge issues
-- [ ] Provide comparison tools for environment outputs
-- [ ] Create validation metrics for bridge performance
-- [ ] Test debugging tools with example scenarios
+### Task 4.4: Include textual diagrams for integration
+- [ ] Create architectural diagrams for bridge system
+- [ ] Document data flow between environments
+- [ ] Provide protocol and message format descriptions
+- [ ] Include performance and resource usage diagrams
+- [ ] Format diagrams for RAG compatibility
+- [ ] Ensure diagrams are conceptual and clear
 
-### Task 4.5: Chapter 4 Completion and Best Practices
-- [ ] Complete chapter with best practices summary
-- [ ] Document when to use each environment
+### Task 4.5: Chapter 4 completion and validation
 - [ ] Ensure chapter length is 800-1200 words
-- [ ] Verify clean section headers for RAG readiness
-- [ ] Review for technical accuracy
+- [ ] Verify bridge examples are technically accurate
+- [ ] Check RAG-ready header structure
+- [ ] Validate integration concepts against best practices
+- [ ] Review for target audience appropriateness
+- [ ] Confirm no Module 3+ content is included
 
-## System Integration Tasks
+## Quality & Validation Tasks
 
-### Task S1: Content Structure Validation
-- [ ] Verify all chapters follow Docusaurus Markdown format
-- [ ] Ensure proper heading hierarchy and navigation
-- [ ] Check internal links and cross-references
-- [ ] Validate code examples for Python-only compatibility
-- [ ] Confirm diagrams are conceptual and described textually
+### Task 5.1: Verify all Python examples run correctly with ROS 2 + rclpy
+- [ ] Test all Python examples in ROS 2 Humble environment
+- [ ] Verify rclpy usage follows ROS 2 best practices
+- [ ] Check for proper error handling and logging
+- [ ] Validate message type compatibility with ROS 2
+- [ ] Ensure examples handle edge cases appropriately
+- [ ] Document any environment-specific requirements
 
-### Task S2: RAG Content Optimization
-- [ ] Ensure content chunking is appropriate for RAG system
-- [ ] Verify technical claims are verifiable against official docs
-- [ ] Check that content is self-contained and clear
+### Task 5.2: Check all Markdown headers are clean for RAG chunking
+- [ ] Verify header hierarchy consistency across all chapters
+- [ ] Ensure headers are descriptive and self-contained
+- [ ] Check for proper formatting without interfering with code
 - [ ] Optimize content structure for semantic search
-- [ ] Validate no hallucinated or unverifiable information
+- [ ] Test header clarity for RAG system compatibility
+- [ ] Remove any headers that could cause parsing issues
 
-### Task S3: Quality Assurance
-- [ ] Conduct technical accuracy review against Gazebo/Unity documentation
-- [ ] Test all code examples in appropriate environments
-- [ ] Verify diagrams accurately represent concepts
-- [ ] Check content is appropriate for target audience
-- [ ] Ensure consistent tone and instructional approach
+### Task 5.3: Validate content against Module 2 /sp.specify requirements
+- [ ] Confirm all functional requirements from spec are met
+- [ ] Verify non-functional requirements are satisfied
+- [ ] Check success criteria are fulfilled
+- [ ] Validate constraints are adhered to (word count, format, etc.)
+- [ ] Ensure target audience requirements are met
+- [ ] Confirm scope boundaries are respected
 
-### Task S4: Module Completion
-- [ ] Final review of all chapters for consistency
-- [ ] Verify all constraints are met (word count, format, etc.)
-- [ ] Ensure no Module 3+ content is included
-- [ ] Prepare module for integration with book structure
-- [ ] Validate RAG readiness across all chapters
+### Task 5.4: Ensure no Module 3+ content leakage
+- [ ] Review all chapters for NVIDIA Isaac references
+- [ ] Check for Vision-Language-Action content
+- [ ] Verify no Module 3+ concepts are introduced
+- [ ] Confirm focus remains on Gazebo and Unity only
+- [ ] Validate that content stays within Module 2 scope
+- [ ] Remove any cross-module contamination
+
+### Task 5.5: Document any decisions or tradeoffs in simulation setup
+- [ ] Record physics parameter choices and rationale
+- [ ] Document sensor configuration decisions
+- [ ] Note performance vs accuracy tradeoffs
+- [ ] Capture architecture and integration decisions
+- [ ] Include optimization strategy choices
+- [ ] Maintain decision log for future reference
+
+### Task 5.6: Final module validation and integration
+- [ ] Perform comprehensive review of all content
+- [ ] Verify Docusaurus Markdown compatibility
+- [ ] Test RAG readiness of all chapters
+- [ ] Confirm Python examples function as documented
+- [ ] Validate word count requirements per chapter
+- [ ] Prepare module for book integration
 
 ## Acceptance Criteria for Each Task:
 - [ ] Task completed with all checkboxes marked
-- [ ] Code examples tested and functional
-- [ ] Technical accuracy verified against official documentation
+- [ ] Python examples tested and functional with ROS 2 + rclpy
 - [ ] Content formatted in proper Docusaurus Markdown
-- [ ] RAG-ready structure with clean chunking
+- [ ] RAG-ready structure with clean section headers
+- [ ] Technical accuracy verified against documentation
 - [ ] Aligned with target audience requirements
-- [ ] Chapter length within 800-1200 words range
-- [ ] No cross-module contamination (Module 3+ content)
+- [ ] No Module 3+ content included
+- [ ] Word count within 800-1200 words per chapter

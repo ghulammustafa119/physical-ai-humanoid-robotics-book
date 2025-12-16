@@ -5,7 +5,7 @@ description: "Synchronizing physics and visual environments with data exchange p
 
 # Chapter 4: Bridging Gazebo and Unity
 
-## Introduction
+## Introduction to Gazebo-Unity Integration
 
 The integration of Gazebo and Unity creates a comprehensive digital twin environment that combines the physics accuracy of Gazebo with the visual fidelity of Unity. This bridge enables robotics developers to leverage the strengths of both platforms: Gazebo's realistic physics simulation and sensor modeling, and Unity's high-quality rendering and interactive human-robot interfaces.
 
@@ -894,6 +894,26 @@ class BridgeValidator:
 
         return report
 ```
+
+## Performance Considerations
+
+### Resource Management
+
+Running dual simulation environments requires careful resource management:
+
+- **CPU Usage**: Monitor and balance computational load between physics and rendering
+- **Memory Usage**: Optimize asset loading and unloading to prevent memory leaks
+- **Network Bandwidth**: Optimize data transmission between environments
+- **Graphics Resources**: Use Level of Detail (LOD) systems to maintain performance
+
+### Communication Optimization
+
+Efficient data exchange between environments:
+
+- **Data Compression**: Compress large data sets like point clouds
+- **Selective Synchronization**: Only sync objects that are important for both environments
+- **Update Rate Management**: Balance between 20-30 Hz for good responsiveness without overwhelming the system
+- **Message Batching**: Combine multiple small messages into larger packets
 
 ## Best Practices and Recommendations
 

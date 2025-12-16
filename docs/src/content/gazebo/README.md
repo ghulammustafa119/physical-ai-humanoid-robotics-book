@@ -11,24 +11,21 @@ This directory contains the content for Module 2 of the Physical AI & Humanoid R
    - Performance vs accuracy trade-offs
 
 2. **Chapter 2: Sensor Simulation in Gazebo**
-   - LiDAR sensor simulation with realistic parameters
-   - Depth camera simulation and calibration
-   - IMU simulation with noise models
-   - ROS 2 topic mapping for sensor data
-   - Visualization and debugging tools
+   - LiDAR, Depth Camera, and IMU sensor simulation
+   - Realistic parameter configuration and noise modeling
+   - ROS 2 topic mapping for sensor data acquisition
+   - Data processing and visualization tools
 
 3. **Chapter 3: Unity for High-Fidelity Interaction**
-   - Unity environment setup for robotics
+   - Unity environment setup for robotics applications
    - Rendering humanoid robots with realistic materials
-   - Human-robot interaction simulation
-   - ROS 2 integration in Unity
-   - Performance optimization techniques
+   - Human-robot interaction simulation concepts
+   - ROS 2 integration in Unity environment
 
 4. **Chapter 4: Bridging Gazebo and Unity**
    - Architecture for Gazebo-Unity integration
-   - Data exchange pipeline design
-   - Synchronization mechanisms
-   - Performance considerations
+   - Data exchange pipeline design and implementation
+   - Synchronization mechanisms and performance considerations
    - Debugging and validation tools
 
 ## Technical Requirements

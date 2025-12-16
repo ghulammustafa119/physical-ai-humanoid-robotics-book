@@ -1,15 +1,15 @@
 ---
 title: "Chapter 3: Unity for High-Fidelity Interaction"
-description: "Using Unity for high-fidelity rendering and human-robot interaction simulation"
+description: "Using Unity for high-fidelity visualization and human-robot interaction simulation"
 ---
 
 # Chapter 3: Unity for High-Fidelity Interaction
 
-## Introduction
+## Introduction to Unity in Robotics
 
 While Gazebo excels at physics simulation and sensor modeling, Unity provides unparalleled capabilities for high-fidelity rendering and human-robot interaction simulation. Unity's advanced graphics engine, intuitive development environment, and extensive asset ecosystem make it an ideal platform for creating visually compelling digital twins that enhance the realism and usability of robotics simulations.
 
-This chapter explores Unity's role in the digital twin ecosystem, focusing on how it complements Gazebo's physics simulation with high-quality visualization and interactive human-robot interfaces. Understanding Unity's capabilities is essential for creating comprehensive simulation environments that bridge the gap between virtual and real-world robotics experiences.
+For humanoid robots, Unity's strength lies in creating immersive visualization environments that can help developers understand robot behavior, test interaction scenarios, and present robotics concepts to stakeholders. Unity complements Gazebo's physics simulation with high-quality visualization and interactive human-robot interfaces.
 
 ## Unity Environment Setup for Robotics
 
@@ -775,9 +775,38 @@ public class SensorVisualizer : MonoBehaviour
 }
 ```
 
-## Performance Considerations and Optimization
+## Unity Scene Architecture for Robotics
 
-### Graphics Optimization
+### Scene Organization
+
+Unity scenes for robotics applications follow a structured organization pattern:
+
+```
+Robotics Scene Hierarchy:
+├── Environment/
+│   ├── Ground/
+│   ├── Obstacles/
+│   └── Lighting/
+├── Robots/
+│   ├── HumanoidRobot/
+│   │   ├── Base/
+│   │   ├── Torso/
+│   │   ├── Arms/
+│   │   └── Legs/
+│   └── Sensors/
+│       ├── LiDAR/
+│       ├── Camera/
+│       └── IMU/
+├── UI/
+│   ├── ControlPanel/
+│   └── StatusDisplay/
+└── Managers/
+    ├── ROSBridge/
+    ├── SceneController/
+    └── PhysicsController/
+```
+
+### Performance Considerations
 
 High-fidelity rendering requires careful optimization to maintain performance:
 
@@ -858,6 +887,85 @@ public class GraphicsOptimizer : MonoBehaviour
         }
     }
 }
+```
+
+## Integration with Gazebo Data
+
+Unity can receive and visualize data from Gazebo simulations:
+
+```python
+# Python script to send Gazebo data to Unity (bridge example)
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import LaserScan, Imu
+import socket
+import json
+
+class GazeboUnityBridge(Node):
+    def __init__(self):
+        super().__init__('gazebo_unity_bridge')
+
+        # Setup socket connection to Unity
+        self.unity_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.unity_socket.connect(('127.0.0.1', 5555))
+
+        # Subscribe to Gazebo sensor data
+        self.lidar_sub = self.create_subscription(
+            LaserScan, '/robot/lidar/scan', self.lidar_callback, 10
+        )
+        self.imu_sub = self.create_subscription(
+            Imu, '/robot/imu/data', self.imu_callback, 10
+        )
+
+        self.get_logger().info('Gazebo-Unity bridge initialized')
+
+    def lidar_callback(self, msg):
+        """Send LiDAR data to Unity"""
+        lidar_data = {
+            'type': 'lidar',
+            'ranges': list(msg.ranges),
+            'angle_min': msg.angle_min,
+            'angle_max': msg.angle_max,
+            'angle_increment': msg.angle_increment
+        }
+
+        try:
+            self.unity_socket.send(json.dumps(lidar_data).encode())
+        except Exception as e:
+            self.get_logger().error(f'Error sending lidar data: {e}')
+
+    def imu_callback(self, msg):
+        """Send IMU data to Unity"""
+        imu_data = {
+            'type': 'imu',
+            'orientation': [msg.orientation.x, msg.orientation.y,
+                           msg.orientation.z, msg.orientation.w],
+            'angular_velocity': [msg.angular_velocity.x, msg.angular_velocity.y,
+                                msg.angular_velocity.z],
+            'linear_acceleration': [msg.linear_acceleration.x, msg.linear_acceleration.y,
+                                   msg.linear_acceleration.z]
+        }
+
+        try:
+            self.unity_socket.send(json.dumps(imu_data).encode())
+        except Exception as e:
+            self.get_logger().error(f'Error sending imu data: {e}')
+
+def main(args=None):
+    rclpy.init(args=args)
+    bridge = GazeboUnityBridge()
+
+    try:
+        rclpy.spin(bridge)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        bridge.unity_socket.close()
+        bridge.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
 ```
 
 ## Summary

@@ -1,15 +1,19 @@
 ---
 title: "Chapter 2: Sensor Simulation in Gazebo"
-description: "Simulating LiDAR, Depth Camera, and IMU sensors with ROS 2 topic mapping"
+description: "Simulating LiDAR, Depth Camera, and IMU sensors with ROS 2 integration"
 ---
 
 # Chapter 2: Sensor Simulation in Gazebo
 
-## Introduction
+## Introduction to Sensor Simulation
 
-Sensor simulation is a critical component of effective robotics simulation, enabling the development and testing of perception algorithms without requiring physical hardware. In Gazebo, realistic sensor simulation bridges the gap between virtual and real-world robotics by generating data that closely matches the characteristics and noise patterns of actual sensors. This chapter explores the simulation of three essential sensor types for humanoid robots: LiDAR, depth cameras, and IMUs.
+Sensor simulation is a critical component of effective robotics simulation, enabling the development and testing of perception algorithms without requiring physical hardware. In Gazebo, realistic sensor simulation bridges the gap between virtual and real-world robotics by generating data that closely matches the characteristics and noise patterns of actual sensors.
 
-Understanding sensor simulation is crucial for developing robust robotics applications that can transition from simulation to reality. Properly configured sensor simulation allows for comprehensive testing of perception algorithms, sensor fusion techniques, and navigation systems in a safe and repeatable environment.
+For humanoid robots, accurate sensor simulation is essential for developing robust perception, navigation, and interaction capabilities. The three primary sensor types we'll focus on are:
+
+- **LiDAR sensors**: Provide 2D or 3D distance measurements for obstacle detection and mapping
+- **Depth cameras**: Offer color and depth information for 3D scene understanding
+- **IMUs**: Deliver orientation and motion data for state estimation
 
 ## LiDAR Sensor Simulation
 
@@ -520,7 +524,7 @@ if __name__ == '__main__':
     main()
 ```
 
-## ROS 2 Topic Mapping and Standard Messages
+## ROS 2 Integration and Standard Messages
 
 ### Standard Message Types
 
@@ -600,92 +604,123 @@ if __name__ == '__main__':
     main()
 ```
 
-## Visualization and Debugging Tools
+## Textual Visualization of Sensor Outputs
 
-### Sensor Data Visualization
+### LiDAR Scan Visualization
 
-Effective visualization tools help understand and debug sensor data:
+LiDAR sensors provide 2D or 3D distance measurements that can be visualized as point clouds or occupancy grids:
 
-```python
-import rclpy
-from rclpy.node import Node
-from sensor_msgs.msg import LaserScan
-import matplotlib.pyplot as plt
-import numpy as np
-
-class SensorVisualizer(Node):
-    def __init__(self):
-        super().__init__('sensor_visualizer')
-
-        # Create figure for visualization
-        self.fig, self.ax = plt.subplots(figsize=(10, 8))
-        self.ax.set_xlim(-10, 10)
-        self.ax.set_ylim(-10, 10)
-        self.ax.set_xlabel('X (m)')
-        self.ax.set_ylabel('Y (m)')
-        self.ax.set_title('LiDAR Scan Visualization')
-        self.ax.grid(True)
-
-        # Subscribe to LiDAR data
-        self.subscription = self.create_subscription(
-            LaserScan,
-            '/robot/lidar/scan',
-            self.lidar_visualize_callback,
-            10
-        )
-
-        self.get_logger().info('Sensor visualizer initialized')
-
-    def lidar_visualize_callback(self, msg):
-        """Visualize LiDAR scan in 2D plot"""
-        # Calculate angles for each range measurement
-        angles = np.linspace(
-            msg.angle_min,
-            msg.angle_max,
-            len(msg.ranges)
-        )
-
-        # Convert to Cartesian coordinates (assuming robot at origin)
-        x_points = []
-        y_points = []
-
-        for i, distance in enumerate(msg.ranges):
-            if np.isfinite(distance):  # Only plot valid measurements
-                angle = angles[i]
-                x = distance * np.cos(angle)
-                y = distance * np.sin(angle)
-                x_points.append(x)
-                y_points.append(y)
-
-        # Clear previous plot and draw new points
-        self.ax.clear()
-        self.ax.scatter(x_points, y_points, s=1, alpha=0.6)
-        self.ax.set_xlim(-10, 10)
-        self.ax.set_ylim(-10, 10)
-        self.ax.set_xlabel('X (m)')
-        self.ax.set_ylabel('Y (m)')
-        self.ax.set_title('LiDAR Scan Visualization')
-        self.ax.grid(True)
-
-        # Update the plot
-        plt.pause(0.001)
-
-def main(args=None):
-    rclpy.init(args=args)
-    visualizer = SensorVisualizer()
-
-    try:
-        rclpy.spin(visualizer)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        plt.close()
-        visualizer.destroy_node()
-        rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
 ```
+LiDAR Scan Visualization (Top-down view):
+
+     3m
+      ↑
+-3m ← → +3m
+      ↓
+    -3m
+
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+    · · · · · · · · · · · · · · · · · · · ·
+
+Legend:
+· = Free space
+█ = Obstacle detected
+O = Robot position
+```
+
+### Depth Camera Output Visualization
+
+Depth cameras provide both color and depth information that can be processed for 3D understanding:
+
+```
+Depth Camera Output Structure:
+
+Color Image (RGB):
+┌─────────────────┐
+│ R G B R G B ... │ ← Each pixel has RGB values
+│ R G B R G B ... │
+│ R G B R G B ... │
+│ ...     ...     │
+└─────────────────┘
+
+Depth Image (Float32):
+┌─────────────────┐
+│ 1.2 1.5 2.1 ... │ ← Each pixel has depth in meters
+│ 1.3 1.4 2.0 ... │
+│ 1.4 1.3 1.9 ... │
+│ ...     ...     │
+└─────────────────┘
+
+Point Cloud (X,Y,Z):
+┌─────────────────┐
+│(1,2,1.2)(1,3,1.5)│ ← Each pixel becomes 3D point
+│(2,2,1.4)(2,3,1.3)│
+│(3,2,1.5)(3,3,1.2)│
+│ ...      ...     │
+└─────────────────┘
+```
+
+### IMU Data Representation
+
+IMU sensors provide orientation, angular velocity, and linear acceleration data:
+
+```
+IMU Data Structure:
+
+Orientation (Quaternion):
+┌─────────────────────────┐
+│ x: 0.0, y: 0.0,       │
+│ z: 0.7, w: 0.7        │ ← 45° rotation around Z-axis
+└─────────────────────────┘
+
+Angular Velocity:
+┌─────────────────────────┐
+│ x: 0.1, y: 0.0,       │ ← 0.1 rad/s rotation around X
+│ z: 0.0                │
+└─────────────────────────┘
+
+Linear Acceleration:
+┌─────────────────────────┐
+│ x: 0.0, y: 0.0,       │ ← 9.8 m/s² due to gravity
+│ z: 9.8                │   when Z-axis is up
+└─────────────────────────┘
+```
+
+## Performance Considerations
+
+### Sensor Update Rates
+
+Different sensors have different optimal update rates based on their purpose:
+
+- **LiDAR**: 10-40 Hz for navigation and mapping
+- **Depth Camera**: 15-30 Hz for 3D perception
+- **IMU**: 100-200 Hz for accurate motion tracking
+
+### Computational Requirements
+
+Sensor simulation places different computational loads on the system:
+
+- **LiDAR**: Moderate CPU usage, ray tracing calculations
+- **Depth Camera**: High GPU usage, rendering calculations
+- **IMU**: Low computational requirements, physics integration
 
 ## Summary
 
