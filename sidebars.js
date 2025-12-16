@@ -28,7 +28,10 @@ const sidebars = {
       type: 'category',
       label: 'Module 3: AI-Robot Brain (NVIDIA Isaac)',
       items: [
-        // To be added in Module 3
+        'isaac/chapters/chapter1',
+        'isaac/chapters/chapter2',
+        'isaac/chapters/chapter3',
+        'isaac/chapters/chapter4',
       ],
     },
     {
