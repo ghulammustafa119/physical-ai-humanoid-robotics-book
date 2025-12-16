@@ -167,16 +167,19 @@ Services provide synchronous request-response communication:
 
 ### Service Definition
 
-Services are defined in `.srv` files:
+Services are defined in `.srv` files. The format separates request and response parts:
 
 ```
-# Request
+# Request part (before the --- separator)
 string goal_pose
+
 ---
-# Response
+# Response part (after the --- separator)
 bool success
 string message
 ```
+
+The `---` line separates the request fields from the response fields in the service definition.
 
 ### Service Server Example
 
@@ -281,20 +284,24 @@ Actions handle long-running tasks that require:
 
 ### Action Example Structure
 
-Actions are defined in `.action` files:
+Actions are defined in `.action` files. The format separates goal, result, and feedback parts:
 
 ```
-# Goal
+# Goal part (before first --- separator)
 geometry_msgs/PoseStamped target_pose
+
 ---
-# Result
+# Result part (between --- separators)
 bool succeeded
 string message
+
 ---
-# Feedback
+# Feedback part (after second --- separator)
 geometry_msgs/PoseStamped current_pose
 float32 distance_remaining
 ```
+
+The `.action` file format uses `---` lines to separate the goal, result, and feedback fields.
 
 ## Communication Pattern Decision Guide
 

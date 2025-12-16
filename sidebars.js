@@ -18,7 +18,10 @@ const sidebars = {
       type: 'category',
       label: 'Module 2: Digital Twin (Gazebo & Unity)',
       items: [
-        // To be added in Module 2
+        'gazebo/chapters/chapter1',
+        'gazebo/chapters/chapter2',
+        'gazebo/chapters/chapter3',
+        'gazebo/chapters/chapter4',
       ],
     },
     {
