@@ -1,55 +1,66 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Physical AI & Humanoid Robotics — AI-Native Book with Integrated RAG Chatbot Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Technical Accuracy
+Technical claims must be verifiable against official documentation or research from Tier 1 sources (official docs) or Tier 2 sources (peer-reviewed papers). All code examples must run or clearly state assumptions.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. AI-Native Methodology
+Follow Spec-Driven Development (SDD) using Spec-Kit Plus for all implementations. Every feature must start with clear specifications, plans, and testable tasks before implementation.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Test-First (NON-NEGOTIABLE)
+TDD mandatory: Specifications written → User approved → Tests fail → Then implement. Red-Green-Refactor cycle strictly enforced for all code changes.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Reproducibility
+All code, configurations, and architectures must be traceable and reproducible. Every system component must include clear setup instructions and dependency specifications.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Systems Thinking
+Design end-to-end solutions covering AI → Simulation → Robotics → Deployment. Consider integration points between all system components from initial design.
 
-### [PRINCIPLE_6_NAME]
+### VI. RAG Integrity
+RAG chatbot must answer questions strictly from the book content with proper source attribution. No hallucinated content outside the knowledge base is allowed.
 
+## Additional Constraints
 
-[PRINCIPLE__DESCRIPTION]
+Technology Stack:
+- Platform: Docusaurus
+- Deployment: GitHub Pages
+- Backend: FastAPI
+- Database: Neon Serverless Postgres
+- Vector DB: Qdrant Cloud (Free Tier)
+- AI SDKs: OpenAI Agents / ChatKit
+- Spec framework: Spec-Kit Plus
+- Code language: Python (primary), TypeScript where required
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Content Standards:
+- Writing style: instructional, precise, and implementation-focused
+- Reading level: advanced undergraduate to graduate (CS/AI)
+- Every module must include conceptual explanation, architecture overview, practical examples, and code snippets
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+Module Structure:
+- ROS 2 (Robotic Nervous System)
+- Gazebo & Unity (Digital Twin)
+- NVIDIA Isaac (AI-Robot Brain)
+- Vision-Language-Action (VLA)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Spec-first approach:
+- All features begin with specification (specs/<feature>/spec.md)
+- Followed by architectural plan (specs/<feature>/plan.md)
+- Then testable tasks (specs/<feature>/tasks.md)
+- Finally implementation with PHR tracking
+
+Quality Gates:
+- All technical claims verified against official documentation
+- Code examples tested and functional
+- Architecture diagrams reflect actual implementation
+- RAG responses properly grounded in indexed content
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Constitution supersedes all other practices; amendments require documentation and approval.
+All PRs/reviews must verify compliance with technical accuracy and RAG integrity principles.
+Complexity must be justified with clear benefits to the learning objectives.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-16 | **Last Amended**: 2025-12-16
