@@ -1,6 +1,7 @@
 ---
 title: "Chapter 3: Bridging Python AI Agents to ROS 2 Controllers"
 description: "Connecting AI agents to ROS 2 using rclpy for intelligent robot control"
+sidebar_position: 3
 ---
 
 # Chapter 3: Bridging Python AI Agents to ROS 2 Controllers

@@ -1,7 +1,7 @@
 ---
 title: "Chapter 3: Action Planning & Execution"
 description: "Connecting VLM outputs to robot actions with ROS 2 integration"
-sidebar_position: 6
+sidebar_position: 15
 ---
 
 # Chapter 3: Action Planning & Execution

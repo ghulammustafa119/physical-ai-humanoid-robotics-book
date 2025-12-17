@@ -1,6 +1,7 @@
 ---
 title: "Chapter 1: ROS 2 as the Robotic Nervous System"
 description: "Understanding ROS 2 as the middleware backbone of humanoid robots, drawing analogies with biological nervous systems"
+sidebar_position: 1
 ---
 
 # Chapter 1: ROS 2 as the Robotic Nervous System

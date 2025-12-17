@@ -1,7 +1,7 @@
 ---
 title: "Chapter 4: Bridging the AI Brain to ROS 2"
 description: "Python AI agents, ROS 2 integration, and closed-loop feedback for humanoid robots"
-sidebar_position: 4
+sidebar_position: 12
 ---
 
 # Chapter 4: Bridging the AI Brain to ROS 2

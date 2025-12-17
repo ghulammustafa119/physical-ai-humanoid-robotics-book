@@ -38,7 +38,10 @@ const sidebars = {
       type: 'category',
       label: 'Module 4: Vision-Language-Action (VLA)',
       items: [
-        // To be added in Module 4
+        'vla/chapters/chapter1',
+        'vla/chapters/chapter2',
+        'vla/chapters/chapter3',
+        'vla/chapters/chapter4',
       ],
     },
   ],

@@ -1,7 +1,7 @@
 ---
 title: "Chapter 1: Introduction to VLA"
 description: "Foundational concepts of Vision-Language-Action systems for humanoid robots"
-sidebar_position: 4
+sidebar_position: 13
 ---
 
 # Chapter 1: Introduction to VLA

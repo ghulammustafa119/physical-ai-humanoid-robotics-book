@@ -1,6 +1,7 @@
 ---
 title: "Chapter 4: Bridging Gazebo and Unity"
 description: "Synchronizing physics and visual environments with data exchange pipelines"
+sidebar_position: 8
 ---
 
 # Chapter 4: Bridging Gazebo and Unity

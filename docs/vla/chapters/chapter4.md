@@ -1,7 +1,7 @@
 ---
 title: "Chapter 4: Integration & Simulation"
 description: "Testing VLA systems in simulation with evaluation metrics and safety considerations"
-sidebar_position: 7
+sidebar_position: 16
 ---
 
 # Chapter 4: Integration & Simulation

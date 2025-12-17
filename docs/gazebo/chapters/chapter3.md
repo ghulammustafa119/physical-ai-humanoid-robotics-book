@@ -1,6 +1,7 @@
 ---
 title: "Chapter 3: Unity for High-Fidelity Interaction"
 description: "Using Unity for high-fidelity visualization and human-robot interaction simulation"
+sidebar_position: 7
 ---
 
 # Chapter 3: Unity for High-Fidelity Interaction

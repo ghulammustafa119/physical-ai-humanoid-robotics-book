@@ -1,6 +1,7 @@
 ---
 title: "Chapter 2: Sensor Simulation in Gazebo"
 description: "Simulating LiDAR, Depth Camera, and IMU sensors with ROS 2 integration"
+sidebar_position: 6
 ---
 
 # Chapter 2: Sensor Simulation in Gazebo

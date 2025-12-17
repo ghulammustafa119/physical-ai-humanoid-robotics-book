@@ -1,6 +1,7 @@
 ---
 title: "Chapter 4: Modeling Humanoid Robots with URDF"
 description: "Understanding URDF for humanoid robot structure and simulation consistency"
+sidebar_position: 4
 ---
 
 # Chapter 4: Modeling Humanoid Robots with URDF

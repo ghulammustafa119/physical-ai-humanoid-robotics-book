@@ -1,7 +1,7 @@
 ---
 title: "Chapter 1: What Is an AI-Robot Brain?"
 description: "Understanding the AI brain concept and layered intelligence in humanoid robots"
-sidebar_position: 1
+sidebar_position: 9
 ---
 
 # Chapter 1: What Is an AI-Robot Brain?

@@ -9,7 +9,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-username.github.io',
+  url: 'https://ghulammustafa119.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<organization-name>/<repo-name>'
   baseUrl: '/hackathon_book',
@@ -68,7 +68,7 @@ const config = {
             label: 'Book',
           },
           {
-            href: 'https://github.com/your-username/your-repo',
+            href: 'https://github.com/ghulammustafa119/your-repo',
             label: 'GitHub',
             position: 'right',
           },

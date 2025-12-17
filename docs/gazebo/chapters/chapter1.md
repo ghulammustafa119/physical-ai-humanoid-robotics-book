@@ -1,6 +1,7 @@
 ---
 title: "Chapter 1: Gazebo Overview and Physics Simulation"
 description: "Introduction to Gazebo as a digital twin platform for humanoid robot physics simulation"
+sidebar_position: 5
 ---
 
 # Chapter 1: Gazebo Overview and Physics Simulation

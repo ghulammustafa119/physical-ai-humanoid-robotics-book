@@ -1,7 +1,7 @@
 ---
 title: "Chapter 2: Perception in Physical AI Systems"
 description: "Sensors, perception pipelines, and simulation-based testing for humanoid robots"
-sidebar_position: 2
+sidebar_position: 10
 ---
 
 # Chapter 2: Perception in Physical AI Systems

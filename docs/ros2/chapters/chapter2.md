@@ -1,6 +1,7 @@
 ---
 title: "Chapter 2: ROS 2 Communication Primitives"
 description: "Understanding ROS 2 communication patterns: nodes, topics, services, and actions"
+sidebar_position: 2
 ---
 
 # Chapter 2: ROS 2 Communication Primitives

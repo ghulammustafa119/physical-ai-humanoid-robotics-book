@@ -1,7 +1,7 @@
 ---
 title: "Chapter 2: Vision-Language Models (VLMs)"
 description: "Transformer-based architectures and attention mechanisms for robotic perception"
-sidebar_position: 5
+sidebar_position: 14
 ---
 
 # Chapter 2: Vision-Language Models (VLMs)

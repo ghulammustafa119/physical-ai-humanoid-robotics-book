@@ -1,7 +1,7 @@
 ---
 title: "Chapter 3: Planning & Decision Making"
 description: "Task planning, motion planning, and decision-making for humanoid robots"
-sidebar_position: 3
+sidebar_position: 11
 ---
 
 # Chapter 3: Planning & Decision Making
