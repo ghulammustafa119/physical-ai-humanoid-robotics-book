@@ -12,11 +12,11 @@ const config = {
   url: 'https://ghulammustafa119.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<organization-name>/<repo-name>'
-  baseUrl: '/hackathon_book',
+  baseUrl: '/physical-ai-humanoid-robotics-book',
 
   // GitHub pages deployment config.
-  organizationName: 'your-organization',
-  projectName: 'hackathon_book',
+  organizationName: 'ghulammustafa119',
+  projectName: 'physical-ai-humanoid-robotics-book',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -39,7 +39,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book/tree/main/',
         },
         blog: false, // Disable blog if not needed
         theme: {
@@ -68,7 +68,7 @@ const config = {
             label: 'Book',
           },
           {
-            href: 'https://github.com/ghulammustafa119/your-repo',
+            href: 'https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book',
             label: 'GitHub',
             position: 'right',
           },
@@ -104,7 +104,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book',
               },
             ],
           },
