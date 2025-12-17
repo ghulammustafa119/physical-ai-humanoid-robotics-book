@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -n \"\\`\\`\\`python\" docs/src/content/ros2/chapters/*.md)",
+      "Bash(grep -n \"\\`\\`\\`xml\" docs/src/content/ros2/chapters/*.md)"
+    ]
+  }
+}
