@@ -17,17 +17,13 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: |
-          cd physical-ai-book
-          npm install
+        run: npm install
 
       - name: Build website
-        run: |
-          cd physical-ai-book
-          npm run build
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: physical-ai-book/build
+          publish_dir: ./build
