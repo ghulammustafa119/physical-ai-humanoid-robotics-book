@@ -2,6 +2,8 @@
 // `@type` JSDoc annotations allow IDEs and type-checking tools to autocomplete
 // and validate type information. They act as a form of documentation as well.
 
+import {themes as prismThemes} from 'prism-react-renderer';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Physical AI & Humanoid Robotics',
@@ -112,10 +114,10 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics Book. Built with Docusaurus.`,
       },
       prism: {
-        theme: require('prism-react-renderer').themes.github,
-        darkTheme: require('prism-react-renderer').themes.dracula,
+        theme: prismThemes.github,
+        darkTheme: prismThemes.dracula,
       },
     }),
 };
 
-module.exports = config;
+export default config;
