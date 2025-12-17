@@ -112,8 +112,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics Book. Built with Docusaurus.`,
       },
       prism: {
-        theme: require('@docusaurus/theme-classic').prismThemes.github,
-        darkTheme: require('@docusaurus/theme-classic').prismThemes.dracula,
+        theme: require('prism-react-renderer').themes.github,
+        darkTheme: require('prism-react-renderer').themes.dracula,
       },
     }),
 };
