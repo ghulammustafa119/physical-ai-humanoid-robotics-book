@@ -1,0 +1,29 @@
+{
+  "id": "ros2/chapters/chapter4",
+  "title": "Chapter 4: Modeling Humanoid Robots with URDF",
+  "description": "Understanding URDF for humanoid robot structure and simulation consistency",
+  "source": "@site/docs/ros2/chapters/chapter4.md",
+  "sourceDirName": "ros2/chapters",
+  "slug": "/ros2/chapters/chapter4",
+  "permalink": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter4",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book/tree/main/docs/ros2/chapters/chapter4.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "Chapter 4: Modeling Humanoid Robots with URDF",
+    "description": "Understanding URDF for humanoid robot structure and simulation consistency",
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Chapter 3: Bridging Python AI Agents to ROS 2 Controllers",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter3"
+  },
+  "next": {
+    "title": "Chapter 1: Gazebo Overview and Physics Simulation",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter1"
+  }
+}

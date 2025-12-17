@@ -1,0 +1,29 @@
+{
+  "id": "gazebo/chapters/chapter4",
+  "title": "Chapter 4: Bridging Gazebo and Unity",
+  "description": "Synchronizing physics and visual environments with data exchange pipelines",
+  "source": "@site/docs/gazebo/chapters/chapter4.md",
+  "sourceDirName": "gazebo/chapters",
+  "slug": "/gazebo/chapters/chapter4",
+  "permalink": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter4",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book/tree/main/docs/gazebo/chapters/chapter4.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 8,
+  "frontMatter": {
+    "title": "Chapter 4: Bridging Gazebo and Unity",
+    "description": "Synchronizing physics and visual environments with data exchange pipelines",
+    "sidebar_position": 8
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Chapter 3: Unity for High-Fidelity Interaction",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter3"
+  },
+  "next": {
+    "title": "Chapter 1: What Is an AI-Robot Brain?",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter1"
+  }
+}

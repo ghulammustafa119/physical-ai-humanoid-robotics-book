@@ -1,0 +1,29 @@
+{
+  "id": "ros2/chapters/chapter2",
+  "title": "Chapter 2: ROS 2 Communication Primitives",
+  "description": "Understanding ROS 2 communication patterns: nodes, topics, services, and actions",
+  "source": "@site/docs/ros2/chapters/chapter2.md",
+  "sourceDirName": "ros2/chapters",
+  "slug": "/ros2/chapters/chapter2",
+  "permalink": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter2",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book/tree/main/docs/ros2/chapters/chapter2.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Chapter 2: ROS 2 Communication Primitives",
+    "description": "Understanding ROS 2 communication patterns: nodes, topics, services, and actions",
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Chapter 1: ROS 2 as the Robotic Nervous System",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter1"
+  },
+  "next": {
+    "title": "Chapter 3: Bridging Python AI Agents to ROS 2 Controllers",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter3"
+  }
+}

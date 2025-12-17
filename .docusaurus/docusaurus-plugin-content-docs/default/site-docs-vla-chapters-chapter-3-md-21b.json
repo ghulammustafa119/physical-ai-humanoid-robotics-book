@@ -1,0 +1,29 @@
+{
+  "id": "vla/chapters/chapter3",
+  "title": "Chapter 3: Action Planning & Execution",
+  "description": "Connecting VLM outputs to robot actions with ROS 2 integration",
+  "source": "@site/docs/vla/chapters/chapter3.md",
+  "sourceDirName": "vla/chapters",
+  "slug": "/vla/chapters/chapter3",
+  "permalink": "/physical-ai-humanoid-robotics-book/docs/vla/chapters/chapter3",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book/tree/main/docs/vla/chapters/chapter3.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 15,
+  "frontMatter": {
+    "title": "Chapter 3: Action Planning & Execution",
+    "description": "Connecting VLM outputs to robot actions with ROS 2 integration",
+    "sidebar_position": 15
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Chapter 2: Vision-Language Models (VLMs)",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/vla/chapters/chapter2"
+  },
+  "next": {
+    "title": "Chapter 4: Integration & Simulation",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/vla/chapters/chapter4"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "isaac/chapters/chapter3",
+  "title": "Chapter 3: Planning & Decision Making",
+  "description": "Task planning, motion planning, and decision-making for humanoid robots",
+  "source": "@site/docs/isaac/chapters/chapter3.md",
+  "sourceDirName": "isaac/chapters",
+  "slug": "/isaac/chapters/chapter3",
+  "permalink": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter3",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book/tree/main/docs/isaac/chapters/chapter3.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 11,
+  "frontMatter": {
+    "title": "Chapter 3: Planning & Decision Making",
+    "description": "Task planning, motion planning, and decision-making for humanoid robots",
+    "sidebar_position": 11
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Chapter 2: Perception in Physical AI Systems",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter2"
+  },
+  "next": {
+    "title": "Chapter 4: Bridging the AI Brain to ROS 2",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter4"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "gazebo/chapters/chapter3",
+  "title": "Chapter 3: Unity for High-Fidelity Interaction",
+  "description": "Using Unity for high-fidelity visualization and human-robot interaction simulation",
+  "source": "@site/docs/gazebo/chapters/chapter3.md",
+  "sourceDirName": "gazebo/chapters",
+  "slug": "/gazebo/chapters/chapter3",
+  "permalink": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter3",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/ghulammustafa119/physical-ai-humanoid-robotics-book/tree/main/docs/gazebo/chapters/chapter3.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 7,
+  "frontMatter": {
+    "title": "Chapter 3: Unity for High-Fidelity Interaction",
+    "description": "Using Unity for high-fidelity visualization and human-robot interaction simulation",
+    "sidebar_position": 7
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Chapter 2: Sensor Simulation in Gazebo",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter2"
+  },
+  "next": {
+    "title": "Chapter 4: Bridging Gazebo and Unity",
+    "permalink": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter4"
+  }
+}

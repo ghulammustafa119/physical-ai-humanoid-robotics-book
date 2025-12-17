@@ -1,0 +1,113 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/physical-ai-humanoid-robotics-book/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/physical-ai-humanoid-robotics-book/docs",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "gazebo/chapters/chapter1",
+              "path": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter1",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "gazebo/chapters/chapter2",
+              "path": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter2",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "gazebo/chapters/chapter3",
+              "path": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter3",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "gazebo/chapters/chapter4",
+              "path": "/physical-ai-humanoid-robotics-book/docs/gazebo/chapters/chapter4",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/physical-ai-humanoid-robotics-book/docs/intro",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "isaac/chapters/chapter1",
+              "path": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter1",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "isaac/chapters/chapter2",
+              "path": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter2",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "isaac/chapters/chapter3",
+              "path": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter3",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "isaac/chapters/chapter4",
+              "path": "/physical-ai-humanoid-robotics-book/docs/isaac/chapters/chapter4",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "ros2/chapters/chapter1",
+              "path": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter1",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "ros2/chapters/chapter2",
+              "path": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter2",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "ros2/chapters/chapter3",
+              "path": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter3",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "ros2/chapters/chapter4",
+              "path": "/physical-ai-humanoid-robotics-book/docs/ros2/chapters/chapter4",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "vla/chapters/chapter1",
+              "path": "/physical-ai-humanoid-robotics-book/docs/vla/chapters/chapter1",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "vla/chapters/chapter2",
+              "path": "/physical-ai-humanoid-robotics-book/docs/vla/chapters/chapter2",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "vla/chapters/chapter3",
+              "path": "/physical-ai-humanoid-robotics-book/docs/vla/chapters/chapter3",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "vla/chapters/chapter4",
+              "path": "/physical-ai-humanoid-robotics-book/docs/vla/chapters/chapter4",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/physical-ai-humanoid-robotics-book/docs/intro",
+                "label": "intro"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}
