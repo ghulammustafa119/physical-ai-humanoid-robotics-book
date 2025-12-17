@@ -9,22 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: npm
 
       - name: Install dependencies
-        working-directory: physical-ai-book
-        run: npm install
+        run: |
+          cd physical-ai-book
+          npm install
 
       - name: Build website
-        working-directory: physical-ai-book
-        run: npm run build
+        run: |
+          cd physical-ai-book
+          npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
