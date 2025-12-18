@@ -29,12 +29,16 @@
 - [ ] Create architecture diagrams for ROS 2 systems
 - [ ] Add code snippets with explanations
 
-### Task 2.2: Gazebo & Unity Module Content
+### Task 2.2: Gazebo Module Content (Primary Simulator)
 - [ ] Document Gazebo simulation setup
 - [ ] Create digital twin concepts section
 - [ ] Develop simulation examples
-- [ ] Document Unity integration (if applicable)
 - [ ] Add visualization and debugging content
+- [ ] Document best practices for Gazebo integration
+
+### Task 2.2.1: Unity Module Content (Optional Future Enhancement)
+- [ ] Document Unity digital twin concepts (optional)
+- [ ] Develop Unity simulation examples (optional)
 
 ### Task 2.3: NVIDIA Isaac Module Content
 - [ ] Document Isaac ecosystem overview
@@ -62,9 +66,13 @@
 ### Task 3.2: Document Processing Pipeline
 - [ ] Create document ingestion system
 - [ ] Implement text chunking strategy
-- [ ] Set up embedding generation with OpenAI
+- [ ] Set up embedding generation with sentence-transformers (all-MiniLM-L6-v2)
 - [ ] Store embeddings in Qdrant with metadata
 - [ ] Create document indexing and update mechanisms
+- [ ] Unit tests for document ingestion
+- [ ] Unit tests for embedding generation
+- [ ] Validation of vector search accuracy
+- [ ] Regression tests for retrieval correctness
 
 ### Task 3.3: RAG Query System
 - [ ] Implement semantic search functionality
@@ -94,6 +102,10 @@
 - [ ] Verify no hallucinated content in responses
 - [ ] Test system performance under load
 - [ ] Conduct security and privacy review
+- [ ] Define embedding latency benchmarks
+- [ ] Define vector search response targets (<500ms)
+- [ ] Measure retrieval accuracy using test queries
+- [ ] Document performance results
 
 ### Task 4.3: User Experience Testing
 - [ ] Test navigation and search functionality
@@ -101,6 +113,10 @@
 - [ ] Test accessibility compliance
 - [ ] Gather feedback from target audience
 - [ ] Iterate based on feedback
+
+### Task 4.4: Architecture Compliance
+- [ ] Verify all components are free-tier and open-source
+- [ ] Ensure no paid API is required for core functionality
 
 ## Phase 5: Deployment and Documentation
 

@@ -12,7 +12,8 @@ Create a comprehensive AI-native book focusing on Physical AI and Humanoid Robot
 ## Scope
 ### In Scope
 - Docusaurus-based book platform
-- Content covering ROS 2, Gazebo, NVIDIA Isaac, Vision-Language-Action systems
+- Content covering ROS 2, Gazebo (primary simulator), NVIDIA Isaac, Vision-Language-Action systems
+- Optional Unity content as future enhancement
 - RAG-based chatbot for content interaction
 - Code examples and implementation guides
 - Architecture diagrams and system designs
@@ -30,7 +31,8 @@ Create a comprehensive AI-native book focusing on Physical AI and Humanoid Robot
 1. **Book Platform**: Deployable on GitHub Pages using Docusaurus
 2. **Content Modules**:
    - ROS 2 (Robotic Nervous System)
-   - Gazebo & Unity (Digital Twin)
+   - Gazebo (Digital Twin) - Primary simulator
+   - Unity (Digital Twin) - Optional future enhancement
    - NVIDIA Isaac (AI-Robot Brain)
    - Vision-Language-Action (VLA)
 3. **RAG Chatbot**:
@@ -58,6 +60,7 @@ Create a comprehensive AI-native book focusing on Physical AI and Humanoid Robot
 - Backend: FastAPI
 - Database: Neon Serverless Postgres
 - Vector DB: Qdrant Cloud (Free Tier)
+- Embeddings: Open-source models (sentence-transformers) - no API costs
 - Reading level: Advanced undergraduate to graduate (CS/AI)
 
 ## Assumptions

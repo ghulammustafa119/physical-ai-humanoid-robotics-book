@@ -20,10 +20,10 @@
 - ROS 2 ecosystem (Humble Hawksbill or later)
 - NVIDIA Isaac Sim/Gym environments
 - Gazebo simulation platform
-- Unity Digital Twin (optional)
-- OpenAI API for embeddings/completions
+- Unity Digital Twin (optional - future enhancement)
+- Sentence-transformers (all-MiniLM-L6-v2) for embeddings
 - Docusaurus framework
-- Qdrant Cloud service
+- Qdrant vector database
 
 ## 2. Key Decisions and Rationale
 
@@ -44,16 +44,23 @@
 
 ### RAG Architecture
 **Options Considered**:
-- Embedding models: OpenAI ada-002 vs local models (SentenceTransformers)
+- Embedding models: Sentence-transformers (all-MiniLM-L6-v2) vs BGE-small vs Instructor models
 - Retrieval strategies: Semantic search vs hybrid search vs dense retrieval
 - Response generation: Direct prompting vs chain-of-thought vs structured output
 
 **Trade-offs**:
-- OpenAI embeddings are consistent but cost money; local models are free but require maintenance
+- Local embedding models are free and offline-friendly but require initial setup
 - Semantic search is simpler but hybrid might offer better precision
 - Direct prompting is faster but structured output provides more control
 
-**Rationale**: Using OpenAI ada-002 for consistency and quality, semantic search for simplicity, direct prompting for speed.
+**Rationale**: Using sentence-transformers all-MiniLM-L6-v2 for free-tier compliance, offline capability, and reasonable quality, semantic search for simplicity, direct prompting for speed.
+
+### Embeddings Strategy
+**Free-tier Compliance**: All embedding generation uses open-source, locally-run models to ensure no API costs.
+**Model Options**: Primary - sentence-transformers all-MiniLM-L6-v2; Alternative - BGE-small for better performance
+**Offline Capability**: Embedding generation runs locally without internet dependency
+**Pluggable Architecture**: System designed to allow easy replacement of embedding models without architectural changes
+**Future-Proofing**: Architecture supports switching to other models or paid APIs if needed without code changes
 
 ### Principles
 - Smallest viable change: Start with basic RAG functionality, expand iteratively
@@ -152,12 +159,12 @@
 ## 7. Risk Analysis and Mitigation
 
 ### Top 3 Risks
-1. **API Costs**: Uncontrolled OpenAI usage could exceed budget
-   - Mitigation: Rate limiting, usage monitoring, cost alerts
-2. **Service Dependencies**: Third-party services (Qdrant, Neon) could be unavailable
+1. **Service Dependencies**: Third-party services (Qdrant, Neon) could be unavailable
    - Mitigation: Fallback to static content, redundant providers
-3. **Content Quality**: Technical inaccuracies could mislead readers
+2. **Content Quality**: Technical inaccuracies could mislead readers
    - Mitigation: Verification against official docs, peer review process
+3. **Embedding Quality**: Local embedding models may have lower quality than commercial alternatives
+   - Mitigation: Performance testing, accuracy validation, model switching capability
 
 ### Blast Radius
 - Small: Individual API endpoints
@@ -202,8 +209,9 @@
                                    │
                     ┌──────────────┴──────────────┐
                     │                             │
-              ┌─────▼─────┐                ┌──────▼──────┐
-              │  Qdrant   │                │OpenAI APIs  │
-              │(Vectors)  │                │(Embeddings) │
-              └───────────┘                └─────────────┘
+              ┌─────▼─────┐                ┌─────────────┐
+              │  Qdrant   │                │Embedding    │
+              │(Vectors)  │                │Generation   │
+              └───────────┘                │(Local)      │
+                                          └─────────────┘
 ```
