@@ -124,3 +124,4 @@ All book content is properly integrated with:
 This project is licensed under the terms specified in the repository.
 
 <!-- Trigger GitHub Actions rebuild -->
+<!-- New trigger for deployment -->
