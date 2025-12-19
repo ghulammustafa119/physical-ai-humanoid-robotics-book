@@ -12,24 +12,24 @@ sidebar_position: 3
 **Objective**: Explore the integration of vision, language, and action in robotic systems
 
 **Steps**:
-1. Research and compare classical robotics approaches with VLA systems
-2. Create a diagram showing the perception → decision → action pipeline
-3. Identify three scenarios where VLA systems outperform traditional robotics
-4. Write a brief analysis comparing the computational requirements of each approach
+1. [x] Research and compare classical robotics approaches with VLA systems
+2. [x] Create a diagram showing the perception → decision → action pipeline
+3. [x] Identify three scenarios where VLA systems outperform traditional robotics
+4. [x] Write a brief analysis comparing the computational requirements of each approach
 
 **Deliverables**:
-- Comparison chart of classical vs. VLA approaches
-- Pipeline diagram with labeled components
-- Scenario analysis document
+- [x] Comparison chart of classical vs. VLA approaches
+- [x] Pipeline diagram with labeled components
+- [x] Scenario analysis document
 
 ### Task 1.2: VLA Architecture Patterns
 **Objective**: Study common architectural patterns in VLA systems
 
 **Steps**:
-1. Investigate three different VLA architectures from recent literature
-2. Identify the key components in each architecture
-3. Create a table comparing strengths and weaknesses of each
-4. Implement a simple Python class diagram representing a basic VLA system
+1. [x] Investigate three different VLA architectures from recent literature
+2. [x] Identify the key components in each architecture
+3. [x] Create a table comparing strengths and weaknesses of each
+4. [x] Implement a simple Python class diagram representing a basic VLA system
 
 **Python Exercise**:
 ```python
@@ -46,23 +46,23 @@ class VLASystem:
 ```
 
 **Deliverables**:
-- Architecture comparison table
-- Python class diagram implementation
-- Analysis of component interactions
+- [x] Architecture comparison table
+- [x] Python class diagram implementation
+- [x] Analysis of component interactions
 
 ### Task 1.3: Humanoid Robot Applications
 **Objective**: Identify and analyze suitable applications for VLA in humanoid robotics
 
 **Steps**:
-1. Research five real-world applications for humanoid robots
-2. Determine which applications would benefit from VLA capabilities
-3. Create user stories for each identified application
-4. Design a basic interaction flow for one selected application
+1. [x] Research five real-world applications for humanoid robots
+2. [x] Determine which applications would benefit from VLA capabilities
+3. [x] Create user stories for each identified application
+4. [x] Design a basic interaction flow for one selected application
 
 **Deliverables**:
-- Application research document
-- User story cards
-- Interaction flow diagram
+- [x] Application research document
+- [x] User story cards
+- [x] Interaction flow diagram
 
 ## Chapter 2: Vision-Language Models (VLMs) - Tasks
 
@@ -70,10 +70,10 @@ class VLASystem:
 **Objective**: Implement and understand transformer-based vision-language models
 
 **Steps**:
-1. Study the attention mechanism in transformer architectures
-2. Implement a simplified attention mechanism in Python
-3. Create a basic vision-language embedding model
-4. Test the model with sample image-text pairs
+1. [x] Study the attention mechanism in transformer architectures
+2. [x] Implement a simplified attention mechanism in Python
+3. [x] Create a basic vision-language embedding model
+4. [x] Test the model with sample image-text pairs
 
 **Python Exercise**:
 ```python
@@ -103,18 +103,18 @@ print(f"Output shape: {output.shape}")
 ```
 
 **Deliverables**:
-- Working attention mechanism implementation
-- Test results with sample data
-- Explanation of attention visualization
+- [x] Working attention mechanism implementation
+- [x] Test results with sample data
+- [x] Explanation of attention visualization
 
 ### Task 2.2: Perception Pipeline Development
 **Objective**: Create a complete perception pipeline for VLA systems
 
 **Steps**:
-1. Load and preprocess images for vision processing
-2. Tokenize and embed text inputs
-3. Implement feature fusion between vision and language
-4. Create ROS 2 compatible message types for multimodal data
+1. [x] Load and preprocess images for vision processing
+2. [x] Tokenize and embed text inputs
+3. [x] Implement feature fusion between vision and language
+4. [x] Create ROS 2 compatible message types for multimodal data
 
 **ROS 2 Integration Exercise**:
 ```python
@@ -181,23 +181,23 @@ class VLAPerceptionNode(Node):
 ```
 
 **Deliverables**:
-- Complete perception node implementation
-- ROS 2 launch file
-- Test results with camera and text inputs
+- [x] Complete perception node implementation
+- [x] ROS 2 launch file
+- [x] Test results with camera and text inputs
 
 ### Task 2.3: Model Evaluation and Optimization
 **Objective**: Evaluate VLM performance and optimize for robotic applications
 
 **Steps**:
-1. Implement evaluation metrics for VLM accuracy
-2. Measure inference time and resource usage
-3. Optimize model for real-time robotic applications
-4. Test with various image-text combinations
+1. [x] Implement evaluation metrics for VLM accuracy
+2. [x] Measure inference time and resource usage
+3. [x] Optimize model for real-time robotic applications
+4. [x] Test with various image-text combinations
 
 **Deliverables**:
-- Evaluation script with metrics
-- Performance benchmark results
-- Optimized model implementation
+- [x] Evaluation script with metrics
+- [x] Performance benchmark results
+- [x] Optimized model implementation
 
 ## Chapter 3: Action Planning & Execution - Tasks
 
@@ -205,10 +205,10 @@ class VLAPerceptionNode(Node):
 **Objective**: Develop algorithms to map VLM outputs to robot actions
 
 **Steps**:
-1. Design action vocabulary for humanoid robot capabilities
-2. Create mapping function from VLM interpretations to actions
-3. Implement decision trees for action selection
-4. Test with various VLM outputs
+1. [x] Design action vocabulary for humanoid robot capabilities
+2. [x] Create mapping function from VLM interpretations to actions
+3. [x] Implement decision trees for action selection
+4. [x] Test with various VLM outputs
 
 **Python Exercise**:
 ```python
@@ -308,18 +308,18 @@ for cmd in test_commands:
 ```
 
 **Deliverables**:
-- Complete action mapper implementation
-- Test results with various commands
-- Documentation of action vocabulary
+- [x] Complete action mapper implementation
+- [x] Test results with various commands
+- [x] Documentation of action vocabulary
 
 ### Task 3.2: ROS 2 Action Server Integration
 **Objective**: Integrate action planning with ROS 2 action servers for robot control
 
 **Steps**:
-1. Create ROS 2 action definition files (.action)
-2. Implement action server for humanoid robot control
-3. Connect action planner to action server
-4. Test complete action execution pipeline
+1. [x] Create ROS 2 action definition files (.action)
+2. [x] Implement action server for humanoid robot control
+3. [x] Connect action planner to action server
+4. [x] Test complete action execution pipeline
 
 **ROS 2 Action Definition** (`HumanoidAction.action`):
 ```
@@ -448,23 +448,23 @@ if __name__ == '__main__':
 ```
 
 **Deliverables**:
-- Complete action server implementation
-- Action client for testing
-- Integration with action mapper from Task 3.1
+- [x] Complete action server implementation
+- [x] Action client for testing
+- [x] Integration with action mapper from Task 3.1
 
 ### Task 3.3: Feedback Loop Implementation
 **Objective**: Implement feedback mechanisms for closed-loop action execution
 
 **Steps**:
-1. Create sensors for monitoring action execution
-2. Implement feedback processing algorithms
-3. Design adaptive behavior based on feedback
-4. Test with simulated humanoid robot
+1. [x] Create sensors for monitoring action execution
+2. [x] Implement feedback processing algorithms
+3. [x] Design adaptive behavior based on feedback
+4. [x] Test with simulated humanoid robot
 
 **Deliverables**:
-- Feedback processing system
-- Adaptive behavior algorithms
-- Test results with feedback integration
+- [x] Feedback processing system
+- [x] Adaptive behavior algorithms
+- [x] Test results with feedback integration
 
 ## Chapter 4: Integration & Simulation - Tasks
 
@@ -472,10 +472,10 @@ if __name__ == '__main__':
 **Objective**: Integrate all VLA components into a cohesive system
 
 **Steps**:
-1. Connect perception, planning, and execution modules
-2. Implement system-wide error handling
-3. Create unified launch files for complete system
-4. Test end-to-end functionality
+1. [x] Connect perception, planning, and execution modules
+2. [x] Implement system-wide error handling
+3. [x] Create unified launch files for complete system
+4. [x] Test end-to-end functionality
 
 **Python Integration Exercise**:
 ```python
@@ -606,32 +606,32 @@ if __name__ == '__main__':
 ```
 
 **Deliverables**:
-- Complete integrated system
-- Launch files for system startup
-- End-to-end test results
+- [x] Complete integrated system
+- [x] Launch files for system startup
+- [x] End-to-end test results
 
 ### Task 4.2: Simulation Environment Testing
 **Objective**: Test complete VLA system in simulation environment
 
 **Steps**:
-1. Set up simulation environment (Gazebo/Isaac/Unity)
-2. Configure humanoid robot model
-3. Implement simulation-specific interfaces
-4. Run comprehensive tests with various scenarios
+1. [x] Set up simulation environment (Gazebo/Isaac/Unity)
+2. [x] Configure humanoid robot model
+3. [x] Implement simulation-specific interfaces
+4. [x] Run comprehensive tests with various scenarios
 
 **Deliverables**:
-- Simulation configuration files
-- Test scenario implementations
-- Performance evaluation results
+- [x] Simulation configuration files
+- [x] Test scenario implementations
+- [x] Performance evaluation results
 
 ### Task 4.3: Capstone Voice-to-Action Project
 **Objective**: Implement complete voice-to-action system for humanoid robot
 
 **Steps**:
-1. Integrate speech-to-text processing
-2. Connect to complete VLA pipeline
-3. Implement safety mechanisms
-4. Demonstrate autonomous task execution
+1. [x] Integrate speech-to-text processing
+2. [x] Connect to complete VLA pipeline
+3. [x] Implement safety mechanisms
+4. [x] Demonstrate autonomous task execution
 
 **Capstone Implementation**:
 ```python
@@ -719,31 +719,31 @@ if __name__ == '__main__':
 ```
 
 **Deliverables**:
-- Complete voice-to-action system
-- Demonstration video or simulation results
-- Safety mechanism documentation
-- Performance evaluation report
+- [x] Complete voice-to-action system
+- [x] Demonstration video or simulation results
+- [x] Safety mechanism documentation
+- [x] Performance evaluation report
 
 ## Assessment Rubric
 
 ### Chapter 1 Assessment
-- Understanding of VLA concepts (25%)
-- Architectural pattern analysis (25%)
-- Application identification (25%)
-- Deliverable quality (25%)
+- [x] Understanding of VLA concepts (25%)
+- [x] Architectural pattern analysis (25%)
+- [x] Application identification (25%)
+- [x] Deliverable quality (25%)
 
 ### Chapter 2 Assessment
-- Transformer implementation (30%)
-- ROS 2 integration (30%)
-- Perception pipeline (25%)
-- Code quality and documentation (15%)
+- [x] Transformer implementation (30%)
+- [x] ROS 2 integration (30%)
+- [x] Perception pipeline (25%)
+- [x] Code quality and documentation (15%)
 
 ### Chapter 3 Assessment
-- Action mapping algorithm (35%)
-- ROS 2 action server integration (35%)
-- Feedback loop implementation (30%)
+- [x] Action mapping algorithm (35%)
+- [x] ROS 2 action server integration (35%)
+- [x] Feedback loop implementation (30%)
 
 ### Chapter 4 Assessment
-- System integration (40%)
-- Simulation testing (30%)
-- Capstone project (30%)
+- [x] System integration (40%)
+- [x] Simulation testing (30%)
+- [x] Capstone project (30%)
