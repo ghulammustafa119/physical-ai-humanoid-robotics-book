@@ -9,29 +9,32 @@ permissions:
   contents: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm
+          cache-dependency-path: physical-ai-book/package-lock.json
 
       - name: Install dependencies
         working-directory: physical-ai-book
-        run: npm install
+        run: npm ci
 
       - name: Build website
         working-directory: physical-ai-book
         run: npm run build
 
-      - name: Deploy to gh-pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: physical-ai-book/build
+          publish_branch: gh-pages
           force_orphan: true
