@@ -10,11 +10,11 @@ Welcome to the comprehensive guide on Physical AI and Humanoid Robotics. This AI
 
 This book is organized into four comprehensive modules:
 
-### [Module 1: The Robotic Nervous System (ROS 2)](/docs/ros2/chapters/chapter1)
-- [Chapter 1: ROS 2 as the Robotic Nervous System](/docs/ros2/chapters/chapter1) - Understanding ROS 2 as the middleware backbone of humanoid robots
-- [Chapter 2: ROS 2 Communication Primitives](/docs/ros2/chapters/chapter2) - Core communication patterns: topics, services, and actions
-- [Chapter 3: Bridging Python AI Agents to ROS 2 Controllers](/docs/ros2/chapters/chapter3) - Connecting AI agents to ROS 2 using rclpy
-- [Chapter 4: Modeling Humanoid Robots with URDF](/docs/ros2/chapters/chapter4) - Structural modeling for simulation and deployment consistency
+### [Module 1: The Robotic Nervous System (ROS 2)](./ros2/chapters/chapter1)
+- [Chapter 1: ROS 2 as the Robotic Nervous System](./ros2/chapters/chapter1) - Understanding ROS 2 as the middleware backbone of humanoid robots
+- [Chapter 2: ROS 2 Communication Primitives](./ros2/chapters/chapter2) - Core communication patterns: topics, services, and actions
+- [Chapter 3: Bridging Python AI Agents to ROS 2 Controllers](./ros2/chapters/chapter3) - Connecting AI agents to ROS 2 using rclpy
+- [Chapter 4: Modeling Humanoid Robots with URDF](./ros2/chapters/chapter4) - Structural modeling for simulation and deployment consistency
 
 ### Module 2: Digital Twin (Gazebo & Unity)
 - Gazebo simulation fundamentals
