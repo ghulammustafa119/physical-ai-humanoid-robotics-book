@@ -122,3 +122,5 @@ All book content is properly integrated with:
 ## License
 
 This project is licensed under the terms specified in the repository.
+
+<!-- Trigger GitHub Actions rebuild -->
