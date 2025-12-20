@@ -30,7 +30,7 @@ Create a comprehensive AI-native book focusing on Physical AI and Humanoid Robot
 1. **Book Platform**: Deployable on GitHub Pages using Docusaurus
 2. **Content Modules**:
    - ROS 2 (Robotic Nervous System)
-   - Gazebo & Unity (Digital Twin)
+   - Gazebo (Digital Twin) & Unity (Optional)
    - NVIDIA Isaac (AI-Robot Brain)
    - Vision-Language-Action (VLA)
 3. **RAG Chatbot**:
@@ -40,7 +40,7 @@ Create a comprehensive AI-native book focusing on Physical AI and Humanoid Robot
 4. **Code Examples**: All examples must be runnable with clear setup instructions
 
 ### Non-Functional Requirements
-1. **Performance**: Page load times under 3 seconds
+1. **Performance**: Page load times under 3 seconds for standard pages on 3G network conditions, under 1 second on broadband
 2. **Reliability**: 99% uptime for deployed site
 3. **Scalability**: Handle concurrent users during hackathon demos
 4. **Security**: No exposure of sensitive information through RAG responses

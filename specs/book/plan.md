@@ -4,7 +4,7 @@
 
 ### In Scope
 - Docusaurus-based book platform with modular content structure
-- Content modules: ROS 2, Gazebo, NVIDIA Isaac, Vision-Language-Action
+- Content modules: ROS 2, Gazebo, NVIDIA Isaac, Vision-Language-Action (Unity optional)
 - FastAPI backend for RAG chatbot functionality
 - Neon Postgres for metadata storage
 - Qdrant vector database for document embeddings
