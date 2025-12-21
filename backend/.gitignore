@@ -38,3 +38,9 @@ config/local.py
 secrets.json
 *.key
 *.pem
+# Python virtual environments
+venv/
+venv_new/
+venv_test/
+.env/
+__pycache__/
