@@ -18,37 +18,64 @@ class DocumentIngestionService:
             length_function=len,
         )
 
-    def read_book_content(self, source_path: str = "physical-ai-book/docs") -> List[Dict[str, Any]]:
+    def read_book_content(self, source_path: str = None) -> List[Dict[str, Any]]:
         """
         Read book content from Docusaurus docs directory
         """
         documents = []
 
-        source_dir = Path(source_path)
+        # Use default path if none provided, resolving relative to backend directory
+        if source_path is None:
+            # Get the directory of this file and build path to docs
+            current_file_dir = Path(__file__).resolve().parent
+            source_dir = current_file_dir.parent / "physical-ai-book" / "docs"
+        else:
+            source_dir = Path(source_path)
         if not source_dir.exists():
             logging.error(f"Source directory does not exist: {source_path}")
             return documents
 
-        # Find all markdown files in the docs directory
-        for md_file in source_dir.rglob("*.md"):
-            try:
-                with open(md_file, 'r', encoding='utf-8') as f:
-                    content = f.read()
+        # Find all markdown and PDF files in the docs directory recursively
+        for file_path in source_dir.rglob("*"):
+            if file_path.suffix.lower() in ['.md', '.pdf']:
+                try:
+                    if file_path.suffix.lower() == '.md':
+                        # Read markdown files
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            content = f.read()
+                    elif file_path.suffix.lower() == '.pdf':
+                        # For PDF files, we'll need to extract text
+                        try:
+                            from pypdf import PdfReader
+                            with open(file_path, 'rb') as f:
+                                pdf_reader = PdfReader(f)
+                                content = ""
+                                for page in pdf_reader.pages:
+                                    content += page.extract_text() + "\n"
+                        except ImportError:
+                            logging.warning(f"pypdf not installed, skipping PDF file: {file_path}")
+                            continue
+                        except Exception as e:
+                            logging.error(f"Error reading PDF file {file_path}: {e}")
+                            continue
+                    else:
+                        continue  # Should not happen due to the suffix check above
 
                     # Create metadata
                     metadata = {
-                        "source": str(md_file.relative_to(source_dir)),
-                        "file_path": str(md_file),
-                        "file_name": md_file.name,
-                        "directory": str(md_file.parent.relative_to(source_dir))
+                        "source": str(file_path.relative_to(source_dir)),
+                        "file_path": str(file_path),
+                        "file_name": file_path.name,
+                        "directory": str(file_path.parent.relative_to(source_dir)),
+                        "file_type": file_path.suffix.lower()
                     }
 
                     documents.append({
                         "content": content,
                         "metadata": metadata
                     })
-            except Exception as e:
-                logging.error(f"Error reading file {md_file}: {e}")
+                except Exception as e:
+                    logging.error(f"Error reading file {file_path}: {e}")
 
         return documents
 
@@ -71,7 +98,7 @@ class DocumentIngestionService:
 
         return chunked_docs
 
-    async def ingest_documents(self, source_path: str = "physical-ai-book/docs") -> Dict[str, Any]:
+    async def ingest_documents(self, source_path: str = None) -> Dict[str, Any]:
         """
         Ingest all documents from the source path into the vector database
         """
