@@ -1,27 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 import logging
 
 # Import the RAG service
 from services.rag import rag_service
+from models.chat_models import ChatRequest, Source, ChatResponse
 
 router = APIRouter()
-
-# Request/Response models
-class ChatRequest(BaseModel):
-    query: str
-    context: Optional[dict] = None
-
-class Source(BaseModel):
-    content: str
-    source: str
-    page: Optional[int] = None
-
-class ChatResponse(BaseModel):
-    response: str
-    sources: List[Source]
-    context: Optional[dict] = None
 
 @router.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):

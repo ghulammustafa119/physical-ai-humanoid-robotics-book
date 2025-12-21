@@ -1,7 +1,7 @@
 from typing import List, Dict, Any
 from services.vector_db import vector_db_service
 from config.settings import settings
-from api.chat import Source
+from models.chat_models import Source
 import logging
 import google.generativeai as genai
 from services.cache import query_cache
