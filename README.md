@@ -112,6 +112,8 @@ All book content is properly integrated with:
 - Sequential sidebar positioning for navigation
 - Self-contained chapters without forward references
 
+Backend RAG ingests content from a mirrored docs directory for clean separation from frontend book build.
+
 ## Contributing
 
 1. Create feature branch from `main`
