@@ -6,7 +6,8 @@ from services.vector_db import vector_db_service
 from config.settings import settings
 import logging
 import hashlib
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 
 class DocumentIngestionService:
     def __init__(self):
