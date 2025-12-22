@@ -44,3 +44,11 @@ venv_new/
 venv_test/
 .env/
 __pycache__/
+
+# Root Python virtual environment
+hackathon_env/
+
+
+# Node / npm
+node_modules/
+package-lock.json
