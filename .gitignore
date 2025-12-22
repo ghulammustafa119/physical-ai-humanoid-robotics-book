@@ -1,1 +1,15 @@
 node_modules/
+__server/
+hackathon_env/
+venv/
+backend/venv/
+backend/venv_new/
+backend/venv_test/
+backend/physical-ai-book/
+markdown-page/
+dist/
+build/
+*.pyc
+__pycache__/
+.pytest_cache/
+.coverage
