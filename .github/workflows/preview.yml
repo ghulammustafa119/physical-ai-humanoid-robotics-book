@@ -1,0 +1,43 @@
+name: Deploy Preview for PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: physical-ai-book/package-lock.json
+
+      - name: Install dependencies
+        working-directory: physical-ai-book
+        run: npm ci
+
+      - name: Build website
+        working-directory: physical-ai-book
+        run: npm run build
+
+      - name: Deploy preview to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-args: '--prebuilt'
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: physical-ai-book
+          alias-domains: |
+            pr-${{ github.event.number }}-${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app
