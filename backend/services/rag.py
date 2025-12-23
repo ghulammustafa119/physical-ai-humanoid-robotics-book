@@ -3,7 +3,9 @@ from services.vector_db import vector_db_service
 from config.settings import settings
 from models.chat_models import Source
 import logging
+# Import Google Generative AI - using the current recommended approach
 import google.generativeai as genai
+NEW_GENAI = False  # Using the current package, but the import remains the same
 from services.cache import query_cache
 
 class RAGService:

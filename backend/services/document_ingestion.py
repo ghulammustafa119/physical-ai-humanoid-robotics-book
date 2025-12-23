@@ -51,7 +51,11 @@ class DocumentIngestionService:
                                 pdf_reader = PdfReader(f)
                                 content = ""
                                 for page in pdf_reader.pages:
-                                    content += page.extract_text() + "\n"
+                                    page_text = page.extract_text()
+                                    if page_text:  # Check if page text is not None or empty
+                                        content += page_text + "\n"
+                                    else:
+                                        logging.warning(f"Page in PDF {file_path} returned empty text")
                         except ImportError:
                             logging.warning(f"pypdf not installed, skipping PDF file: {file_path}")
                             continue
@@ -60,6 +64,15 @@ class DocumentIngestionService:
                             continue
                     else:
                         continue  # Should not happen due to the suffix check above
+
+                    # Add debug logging
+                    content_length = len(content.strip()) if content else 0
+                    logging.info(f"File: {file_path}, Content length: {content_length}")
+
+                    # Hard guard: if extracted text is empty, skip the file
+                    if not content or len(content.strip()) == 0:
+                        logging.warning(f"Skipping file with empty content: {file_path}")
+                        continue
 
                     # Create metadata
                     metadata = {
@@ -83,7 +96,12 @@ class DocumentIngestionService:
         """
         Split document content into chunks
         """
+        # Add debug logging
+        logging.info(f"Chunking document: {metadata.get('file_name', 'unknown')}, original content length: {len(content)}")
+
         chunks = self.text_splitter.split_text(content)
+        logging.info(f"Number of chunks produced: {len(chunks)}")
+
         chunked_docs = []
 
         for i, chunk in enumerate(chunks):
@@ -105,7 +123,7 @@ class DocumentIngestionService:
         try:
             # Read all book content
             documents = self.read_book_content(source_path)
-            logging.info(f"Found {len(documents)} documents to process")
+            logging.info(f"Found {len(documents)} documents with non-empty content to process")
 
             total_chunks = 0
             processed_docs = 0
@@ -134,7 +152,9 @@ class DocumentIngestionService:
                         continue
 
                 processed_docs += 1
+                logging.info(f"Processed document {processed_docs}/{len(documents)}, stored {len(chunked_docs)} chunks for {doc['metadata']['file_name']}")
 
+            logging.info(f"Total ingestion completed: {processed_docs} documents, {total_chunks} chunks stored")
             return {
                 "status": "success",
                 "processed_documents": processed_docs,

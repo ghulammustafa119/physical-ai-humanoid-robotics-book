@@ -10,12 +10,12 @@ class VectorDBService:
         # Initialize Qdrant client
         if settings.qdrant_api_key:
             self.client = QdrantClient(
-    url="https://39e1a157-0f0d-4101-b5ba-c1e0b2bffac7.us-east4-0.gcp.cloud.qdrant.io:6333", 
-    api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.XakiPfYikL6GM2aLbdoQuWFr9AGfhhn0KKerChj97fs",
-)
-
+                url=settings.qdrant_url,
+                api_key=settings.qdrant_api_key
+            )
         else:
             self.client = QdrantClient(url=settings.qdrant_url)
+
 
         self.collection_name = settings.qdrant_collection_name
         self._ensure_collection_exists()
@@ -55,25 +55,7 @@ class VectorDBService:
                 doc_id = str(uuid.uuid4())
 
             # Generate embedding for the content using Google's service
-            from google.cloud import language_v1
-            import google.auth
-            # from vertexai.language_models import TextEmbeddingModel
-            # import vertexai
-
-            # Initialize Vertex AI with your project
-            # For Google's embedding service, we'll use a different approach
-            # Since we don't have direct access to Vertex AI in this context,
-            # we'll use an alternative approach with requests to Google's API
-            import requests
-
-            # Using Google's embedding API
-            headers = {
-                'Authorization': f'Bearer {settings.google_api_key}',
-                'Content-Type': 'application/json'
-            }
-
             # Using Google's text embedding service
-            # For now, using a mock embedding approach
             # In production, you'd use Google's embedding API
             embedding = self._get_google_embedding(content)
 
@@ -149,7 +131,8 @@ class VectorDBService:
             # Generate embedding for the query using Google's service
             query_embedding = self._get_google_embedding(query)
 
-            # Search in Qdrant
+            # Search in Qdrant using the correct method for Qdrant client 1.7.0
+            from qdrant_client.http import models
             search_results = self.client.search(
                 collection_name=self.collection_name,
                 query_vector=query_embedding,
