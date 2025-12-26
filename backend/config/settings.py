@@ -20,9 +20,9 @@ class Settings(BaseSettings):
 
     # Google Gemini Settings
     google_api_key: str = os.getenv("GOOGLE_API_KEY", "")
-    embedding_model: str = os.getenv("EMBEDDING_MODEL", "text-embedding-004")  # Using Google's embedding model
-    chat_model: str = os.getenv("CHAT_MODEL", "gemini-pro")
-    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-pro")
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "models/text-embedding-004")  # Using Google's embedding model
+    chat_model: str = os.getenv("CHAT_MODEL", "gemini-1.5-flash")
+    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
 
     # Application Settings
     max_query_length: int = int(os.getenv("MAX_QUERY_LENGTH", "1000"))

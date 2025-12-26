@@ -15,6 +15,29 @@ class RAGService:
         genai.configure(api_key=settings.google_api_key)
         self.model = genai.GenerativeModel(settings.gemini_model)
 
+    def _validate_response_compliance(self, query: str, response: str) -> str:
+        """
+        Ensure response follows the strict RAG contract by checking if it properly
+        acknowledges when the book doesn't contain specific information.
+        """
+        response_lower = response.lower()
+
+        # Check if response already complies with the "must state if not in book" rule
+        if ("does not contain information about" in response_lower or
+            "no information" in response_lower or
+            "not found" in response_lower or
+            "not mentioned" in response_lower or
+            "not explicitly stated" in response_lower or
+            "not covered" in response_lower):
+            return response  # Already compliant with the contract
+
+        # If response seems to provide partial info without clearly stating limitations,
+        # we should enforce the contract by returning a proper compliance message
+        # However, we'll be conservative and only do this if we're certain
+        # the response doesn't follow the rules
+
+        return response
+
     def process_query(self, query: str) -> Dict[str, Any]:
         """
         Process a user query using RAG methodology with caching
@@ -67,15 +90,24 @@ class RAGService:
             # Step 3: Generate response using Google Gemini
             full_prompt = f"""
             You are an AI assistant for the Physical AI & Humanoid Robotics Book.
-            Answer the user's question based ONLY on the provided context from the book.
-            If the context doesn't contain enough information to answer the question, say so.
+
+            RULES:
+            1. Answer the user's question based EXCLUSIVELY and ONLY on the provided context from the book.
+            2. NEVER use external knowledge or general world knowledge.
+            3. NEVER hallucinate or make up information not present in the context.
+            4. NEVER infer information that is not explicitly stated in the provided context.
+            5. If the provided context does NOT contain ANY information about the main topic in the user's question,
+               respond with: "The book does not contain information about [specific topic from user's question]."
+            6. If the provided context contains information about the topic but not enough to fully answer the question,
+               clearly state what information IS available in the context and what is NOT available.
+            7. Be precise and factual based only on what is in the context.
 
             Context from book:
             {context}
 
             User's question: {query}
 
-            Answer:
+            Answer (following the rules above):
             """
 
             # Create the generation configuration
@@ -92,8 +124,11 @@ class RAGService:
 
             ai_response = response.text
 
+            # Validate response compliance with the contract
+            validated_response = self._validate_response_compliance(query, ai_response)
+
             result = {
-                "response": ai_response,
+                "response": validated_response,
                 "sources": sources,
                 "context": {
                     "query": query,

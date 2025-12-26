@@ -90,9 +90,13 @@ class VectorDBService:
             # Configure the API key
             genai.configure(api_key=settings.google_api_key)
 
+            # Log the model name being used for debugging
+            model_name = settings.embedding_model
+            logging.debug(f"Using embedding model: {model_name}")
+
             # Get embeddings using the embedding API
             result = genai.embed_content(
-                model='models/embedding-001',  # Google's text embedding model
+                model=model_name,  # Google's text embedding model
                 content=[text],
                 task_type="RETRIEVAL_DOCUMENT"
             )
@@ -100,7 +104,7 @@ class VectorDBService:
             # Return the embedding vector
             return result['embedding'][0]
         except Exception as e:
-            logging.warning(f"Error getting Google embedding: {e}, using fallback method")
+            logging.warning(f"Error getting Google embedding with model '{settings.embedding_model}': {e}, using fallback method")
             # Fallback to hash-based approach if API fails
             import hashlib
             import numpy as np
