@@ -42,12 +42,13 @@ This project is an AI-native book focusing on Physical AI and Humanoid Robotics 
 
 - **Platform**: Docusaurus v3.1.0
 - **Deployment**: GitHub Pages
-- **Backend**: FastAPI
+- **Backend**: FastAPI + Python 3.11+
 - **Database**: Neon Serverless Postgres
 - **Vector DB**: Qdrant Cloud
-- **AI SDKs**: OpenAI API
+- **AI Model**: Cohere API (command-r-08-2024)
 - **Spec Framework**: Spec-Kit Plus
 - **Primary Language**: Python, with TypeScript for frontend
+- **Chat UI**: React + TypeScript integrated into Docusaurus
 
 ## Book Modules Overview
 
@@ -77,21 +78,76 @@ This project is an AI-native book focusing on Physical AI and Humanoid Robotics 
 
 ## Getting Started
 
-1. **Install dependencies**:
+### Prerequisites
+
+- Python 3.11+
+- Node.js 18+ and npm
+- Cohere API key (free tier available at https://cohere.com/)
+
+### Installation
+
+1. **Clone the repository**:
    ```bash
-   npm install  # For Docusaurus frontend
-   pip install -r requirements.txt  # For FastAPI backend
+   git clone <repository-url>
+   cd hackathon_book
    ```
 
-2. **Run the development server**:
+2. **Install frontend dependencies**:
    ```bash
-   npm run dev  # For Docusaurus frontend
+   cd physical-ai-book
+   npm install
    ```
 
-3. **Start the backend**:
+3. **Install backend dependencies**:
    ```bash
-   uvicorn backend.main:app --reload  # For FastAPI backend
+   cd ../backend
+   python -m venv venv_simple
+   source venv_simple/bin/activate  # On Windows: venv_simple\Scripts\activate
+   pip install fastapi uvicorn pydantic pydantic-settings cohere python-dotenv
    ```
+
+4. **Configure environment variables**:
+   ```bash
+   cd backend
+   cp .env.example .env
+   # Edit .env and add your API keys:
+   # - COHERE_API_KEY=your_cohere_api_key
+   # - DATABASE_URL=your_neon_postgres_url
+   # - QDRANT_URL=your_qdrant_cloud_url
+   # - QDRANT_API_KEY=your_qdrant_api_key
+   ```
+
+### Running the Application
+
+1. **Start the backend server** (Terminal 1):
+   ```bash
+   cd backend
+   source venv_simple/bin/activate
+   python main.py
+   # Backend will run on http://localhost:8000
+   ```
+
+2. **Start the Docusaurus frontend** (Terminal 2):
+   ```bash
+   cd physical-ai-book
+   npm start
+   # Frontend will run on http://localhost:3000
+   ```
+
+3. **Access the application**:
+   - Open browser: `http://localhost:3000/physical-ai-humanoid-robotics-book/`
+   - Look for the purple chat button in the bottom-right corner
+   - Click to open the AI chat assistant
+   - Ask questions about robotics, ROS 2, or book content
+
+### Testing the Chat API
+
+Test the backend directly:
+```bash
+curl -X POST http://localhost:8000/api/v1/chat \
+  -H "Content-Type: application/json" \
+  -d '{"query":"What is ROS 2?"}'
+```
 
 ## Development Workflow
 
@@ -113,6 +169,42 @@ All book content is properly integrated with:
 - Self-contained chapters without forward references
 
 Backend RAG ingests content from a mirrored docs directory for clean separation from frontend book build.
+
+## Troubleshooting
+
+### Backend Issues
+
+**Problem**: `ModuleNotFoundError: No module named 'cohere'`
+- **Solution**: Make sure you activated the virtual environment and installed dependencies:
+  ```bash
+  cd backend
+  source venv_simple/bin/activate
+  pip install cohere
+  ```
+
+**Problem**: `404 error: model 'command-r' was removed`
+- **Solution**: Update your `.env` file to use the new model:
+  ```env
+  COHERE_MODEL=command-r-08-2024
+  ```
+  Then restart the backend server.
+
+**Problem**: Chat button not appearing
+- **Solution**: Clear browser cache and ensure Docusaurus rebuilt:
+  ```bash
+  cd physical-ai-book
+  rm -rf .docusaurus build
+  npm start
+  ```
+
+**Problem**: CORS errors in browser console
+- **Solution**: Ensure backend is running on port 8000 and `ALLOWED_ORIGINS=*` in `.env`
+
+### Getting API Keys
+
+- **Cohere**: Sign up at https://cohere.com/ for free tier (1000 calls/month)
+- **Qdrant Cloud**: Sign up at https://cloud.qdrant.io/ for free tier
+- **Neon Postgres**: Sign up at https://neon.tech/ for free serverless database
 
 ## Contributing
 

@@ -15,36 +15,84 @@ This is the backend API for the Physical AI & Humanoid Robotics Book RAG chatbot
 
 ## Prerequisites
 
-- Python 3.8+
-- Google API key for Gemini
-- Qdrant vector database (can be local or cloud)
-- PostgreSQL database (Neon recommended)
+- Python 3.11+
+- Cohere API key (free tier available at https://cohere.com/)
+- Qdrant vector database (cloud recommended)
+- PostgreSQL database (Neon Serverless recommended)
 
 ## Setup
 
-1. Install dependencies:
+1. Create virtual environment:
 ```bash
-pip install -r requirements.txt
+python -m venv venv_simple
+source venv_simple/bin/activate  # On Windows: venv_simple\Scripts\activate
 ```
 
-2. Set up environment variables:
+2. Install dependencies:
 ```bash
-cp .env .env.local
-# Edit .env.local with your actual configuration
+pip install fastapi uvicorn pydantic pydantic-settings cohere python-dotenv
 ```
 
-3. Start the API server:
+3. Set up environment variables:
 ```bash
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+cp .env.example .env
+# Edit .env with your actual configuration
+```
+
+Required environment variables in `.env`:
+```env
+# Cohere Configuration (REQUIRED)
+COHERE_API_KEY=your_cohere_api_key_here
+COHERE_MODEL=command-r-08-2024
+
+# Database Configuration
+DATABASE_URL=postgresql://user:password@host/database
+
+# Qdrant Configuration
+QDRANT_URL=https://your-qdrant-instance.com
+QDRANT_API_KEY=your_qdrant_api_key
+QDRANT_COLLECTION_NAME=book_content
+
+# Application Settings
+DEBUG=True
+ENVIRONMENT=development
+ALLOWED_ORIGINS=*
+```
+
+4. Start the API server:
+```bash
+python main.py
+# Or with uvicorn directly:
+# uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ## Environment Variables
 
-- `GOOGLE_API_KEY`: Your Google API key for Gemini
-- `QDRANT_URL`: URL to your Qdrant instance
-- `QDRANT_API_KEY`: API key for Qdrant (if using cloud)
-- `DATABASE_URL`: PostgreSQL connection string
-- `NEON_DATABASE_URL`: Neon PostgreSQL connection string
+### AI Model Configuration
+- `COHERE_API_KEY`: Your Cohere API key (get free tier at https://cohere.com/)
+- `COHERE_MODEL`: Model to use (default: `command-r-08-2024`)
+
+### Database Configuration
+- `DATABASE_URL`: PostgreSQL connection string (Neon Serverless recommended)
+
+### Vector Database Configuration
+- `QDRANT_URL`: URL to your Qdrant Cloud instance
+- `QDRANT_API_KEY`: API key for Qdrant Cloud
+- `QDRANT_COLLECTION_NAME`: Collection name for book embeddings (default: `book_content`)
+
+### Application Settings
+- `DEBUG`: Enable debug mode (default: `True`)
+- `ENVIRONMENT`: Environment name (default: `development`)
+- `ALLOWED_ORIGINS`: CORS allowed origins (default: `*` for development)
+- `RAG_MAX_TOKENS`: Max tokens for AI responses (default: `2000`)
+- `RAG_TEMPERATURE`: Temperature for generation (default: `0.7`)
+
+### Optional: Alternative AI Models
+The system also supports Google Gemini and OpenAI as fallback options:
+- `GOOGLE_APPLICATION_CREDENTIALS`: Path to Google service account JSON
+- `GEMINI_MODEL`: Google Gemini model name
+- `OPENAI_API_KEY`: OpenAI API key
+- `OPENAI_MODEL`: OpenAI model name
 
 ## API Endpoints
 
@@ -98,5 +146,67 @@ The RAG system works as follows:
 1. Book content is ingested and stored as vector embeddings in Qdrant
 2. User queries are converted to embeddings and searched against the vector database
 3. Relevant content is retrieved and used as context for the LLM
-4. The LLM generates a response based on the retrieved context
+4. Cohere's `command-r-08-2024` model generates a response based on the retrieved context
 5. Responses include source attribution to the original book content
+
+## Chat Interface Integration
+
+The backend API is integrated with a Docusaurus-based frontend featuring:
+
+- **Toggle-able Chat Panel**: Purple gradient button in bottom-right corner
+- **Real-time AI Responses**: Powered by Cohere API
+- **Clean UI**: Modern design with smooth animations
+- **Context-Aware**: Can answer questions about book content
+- **Source Attribution**: Responses include references to original content
+
+### Frontend Integration Files
+Located in `physical-ai-book/src/`:
+- `components/ChatPanel/index.tsx` - Main chat component
+- `components/ChatPanel/styles.module.css` - Chat styling
+- `theme/Root.tsx` - Global chat panel injection
+
+### API Request Format
+```typescript
+POST /api/v1/chat
+Content-Type: application/json
+
+{
+  "query": "What is ROS 2?",
+  "selectedText": "optional selected text from book",
+  "sessionId": "optional session id"
+}
+```
+
+### API Response Format
+```json
+{
+  "query_id": "uuid",
+  "response_text": "AI generated response...",
+  "sources": [
+    {
+      "title": "Source Title",
+      "url": "/book/section",
+      "page": 1,
+      "section": "1.1",
+      "text_snippet": "Relevant text..."
+    }
+  ],
+  "confidence_score": 0.95,
+  "token_usage": {
+    "input_tokens": 10,
+    "output_tokens": 150,
+    "total_tokens": 160
+  }
+}
+```
+
+## AI Model: Cohere command-r-08-2024
+
+This system uses Cohere's `command-r-08-2024` model which offers:
+- **Free Tier Available**: 1000 API calls per month
+- **High Quality Responses**: Advanced reasoning capabilities
+- **Fast Performance**: Low latency for real-time chat
+- **Multilingual Support**: Works in multiple languages
+- **RAG-Optimized**: Designed for retrieval-augmented generation
+
+**Note**: Previous models (`command-r`, `command-r-plus`) were deprecated September 15, 2025.

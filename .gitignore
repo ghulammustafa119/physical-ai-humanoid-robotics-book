@@ -2,9 +2,9 @@ node_modules/
 __server/
 hackathon_env/
 venv/
+venv_*/
 backend/venv/
-backend/venv_new/
-backend/venv_test/
+backend/venv_*/
 backend/physical-ai-book/
 markdown-page/
 dist/
@@ -14,3 +14,6 @@ __pycache__/
 .pytest_cache/
 .coverage
 credentials/
+.env
+*.env
+!.env.example
