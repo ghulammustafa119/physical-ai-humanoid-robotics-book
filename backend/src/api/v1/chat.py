@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from typing import Optional
 from uuid import UUID
 import uuid
+from pydantic import BaseModel
 from ...models.response import ChatResponse
 from ...models.text_selection import TextSelection
 from ...services.rag_service import rag_service
@@ -12,18 +13,29 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.post("/", response_model=ChatResponse)
+class ChatRequest(BaseModel):
+    query: str
+    selectedText: Optional[str] = None
+    selected_text: Optional[str] = None
+    sessionId: Optional[str] = None
+    session_id: Optional[str] = None
+    bookSection: Optional[str] = None
+    book_section: Optional[str] = None
+
+
+@router.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(
-    query: str,
-    selected_text: Optional[str] = None,
-    session_id: Optional[str] = None,
-    book_section: Optional[str] = None,
-    db: Session = Depends(get_db_session)
+    request: ChatRequest
 ):
     """
     Main chat endpoint that processes user queries with optional text selection restriction
     """
     try:
+        # Extract parameters (support both camelCase and snake_case)
+        query = request.query
+        selected_text = request.selected_text or request.selectedText
+        book_section = request.book_section or request.bookSection
+
         # Validate input
         if not query or len(query.strip()) == 0:
             raise HTTPException(

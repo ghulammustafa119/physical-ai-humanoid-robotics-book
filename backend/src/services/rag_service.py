@@ -5,7 +5,19 @@ from datetime import datetime
 from ..models.response import ChatResponse, SourceReference, ChatResponseCreate
 from ..models.text_selection import TextSelection
 from ..config.settings import settings
-from .openai_service import openai_service
+
+# Try to import available AI services
+AI_SERVICE = None
+try:
+    from .cohere_service import cohere_service
+    AI_SERVICE = 'cohere'
+except ImportError:
+    try:
+        from .gemini_service import gemini_service
+        AI_SERVICE = 'gemini'
+    except ImportError:
+        from .openai_service import openai_service
+        AI_SERVICE = 'openai'
 
 
 logger = logging.getLogger(__name__)
@@ -130,13 +142,26 @@ class RAGService:
         Generate a response based only on the selected text
         """
         try:
-            # Use the OpenAI service to generate the response
-            result = await openai_service.generate_response(
-                query=query,
-                context=selected_text,
-                selected_text=selected_text
-            )
-            return result["response_text"]
+            # Use available AI service to generate the response
+            if AI_SERVICE == 'cohere':
+                result = await cohere_service.generate_response(
+                    prompt=query,
+                    context=selected_text
+                )
+                return result
+            elif AI_SERVICE == 'gemini':
+                result = await gemini_service.generate_response(
+                    prompt=query,
+                    context=selected_text
+                )
+                return result
+            else:
+                result = await openai_service.generate_response(
+                    query=query,
+                    context=selected_text,
+                    selected_text=selected_text
+                )
+                return result["response_text"]
         except Exception as e:
             logger.error(f"Error generating response from selected text: {str(e)}")
             # Return a fallback response
@@ -151,12 +176,25 @@ class RAGService:
         Generate a response based on the full book content
         """
         try:
-            # Use the OpenAI service to generate the response
-            result = await openai_service.generate_response(
-                query=query,
-                context=f"Book section: {book_section}" if book_section else None
-            )
-            return result["response_text"]
+            # Use available AI service to generate the response
+            if AI_SERVICE == 'cohere':
+                result = await cohere_service.generate_response(
+                    prompt=query,
+                    context=f"Book section: {book_section}" if book_section else None
+                )
+                return result
+            elif AI_SERVICE == 'gemini':
+                result = await gemini_service.generate_response(
+                    prompt=query,
+                    context=f"Book section: {book_section}" if book_section else None
+                )
+                return result
+            else:
+                result = await openai_service.generate_response(
+                    query=query,
+                    context=f"Book section: {book_section}" if book_section else None
+                )
+                return result["response_text"]
         except Exception as e:
             logger.error(f"Error generating response from full content: {str(e)}")
             # Return a fallback response

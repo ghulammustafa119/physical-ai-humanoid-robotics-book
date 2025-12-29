@@ -21,9 +21,18 @@ class Settings(BaseSettings):
     qdrant_api_key: Optional[str] = None
     qdrant_collection_name: str = "book_content"
 
-    # OpenAI settings
-    openai_api_key: str
+    # OpenAI settings (optional, use Gemini if not provided)
+    openai_api_key: Optional[str] = None
     openai_model: str = "gpt-3.5-turbo"
+
+    # Google Gemini settings
+    google_api_key: Optional[str] = None
+    google_application_credentials: Optional[str] = None
+    gemini_model: str = "gemini-2.5-flash"
+
+    # Cohere settings
+    cohere_api_key: Optional[str] = None
+    cohere_model: str = "command-r-08-2024"
 
     # RAG settings
     rag_max_tokens: int = 2000
