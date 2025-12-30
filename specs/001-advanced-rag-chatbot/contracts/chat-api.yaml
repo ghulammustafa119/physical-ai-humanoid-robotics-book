@@ -1,0 +1,193 @@
+# OpenAPI Contract: Advanced RAG Chatbot API
+
+openapi: 3.0.3
+info:
+  title: Advanced RAG Chatbot API
+  description: API for interacting with the RAG chatbot system with user-selected text functionality
+  version: 1.0.0
+
+paths:
+  /api/v1/chat:
+    post:
+      summary: Send a query to the RAG chatbot
+      description: Process user query with optional selected text restriction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: Successful response from the chatbot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          description: Invalid request parameters
+        '500':
+          description: Internal server error
+      security:
+        - bearerAuth: []
+
+  /api/v1/text-selection:
+    post:
+      summary: Create a text selection
+      description: Store user's selected text with positioning information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextSelectionRequest'
+      responses:
+        '201':
+          description: Text selection created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextSelectionResponse'
+        '400':
+          description: Invalid selection parameters
+        '500':
+          description: Internal server error
+      security:
+        - bearerAuth: []
+
+components:
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The user's query
+          example: "Explain the concept of inverse kinematics in this section"
+        selected_text:
+          type: string
+          description: Optional selected text to restrict the answer context
+          example: "Inverse kinematics is a method used in computer graphics and robotics to determine the joint parameters that achieve a desired position of the end-effector..."
+        session_id:
+          type: string
+          description: Optional session ID to maintain conversation context
+          example: "session-12345"
+        book_section:
+          type: string
+          description: The book section where the query originates
+          example: "chapter-3/section-2"
+
+    ChatResponse:
+      type: object
+      required:
+        - answer
+        - sources
+        - query_id
+      properties:
+        answer:
+          type: string
+          description: The chatbot's response to the query
+          example: "Inverse kinematics is a mathematical approach used to determine the joint angles needed to position a robot's end-effector at a desired location..."
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceReference'
+          description: List of sources used in the response
+        query_id:
+          type: string
+          description: Unique identifier for this query
+          example: "query-67890"
+        session_id:
+          type: string
+          description: Session ID for the conversation
+          example: "session-12345"
+        confidence_score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Confidence score of the response
+          example: 0.85
+
+    TextSelectionRequest:
+      type: object
+      required:
+        - content
+        - book_section
+      properties:
+        content:
+          type: string
+          description: The selected text content
+          example: "The PID controller is a feedback control mechanism..."
+        start_position:
+          type: integer
+          description: Starting character position of the selection
+          example: 1250
+        end_position:
+          type: integer
+          description: Ending character position of the selection
+          example: 1320
+        book_section:
+          type: string
+          description: The book section where the text is selected
+          example: "chapter-5/section-1"
+        page_number:
+          type: integer
+          description: Page number where the selection occurs
+          example: 45
+
+    TextSelectionResponse:
+      type: object
+      required:
+        - id
+        - content
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the text selection
+          example: "selection-abc123"
+        content:
+          type: string
+          description: The selected text content
+          example: "The PID controller is a feedback control mechanism..."
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the selection was created
+          example: "2023-10-20T10:30:00Z"
+
+    SourceReference:
+      type: object
+      required:
+        - title
+        - url
+        - page
+      properties:
+        title:
+          type: string
+          description: Title of the source
+          example: "Chapter 3: Robot Kinematics"
+        url:
+          type: string
+          description: URL to the source location
+          example: "/book/chapter-3"
+        page:
+          type: integer
+          description: Page number in the book
+          example: 45
+        section:
+          type: string
+          description: Specific section within the source
+          example: "3.2 Inverse Kinematics"
+        text_snippet:
+          type: string
+          description: Relevant text snippet from the source
+          example: "Inverse kinematics determines joint parameters for desired end-effector position..."
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

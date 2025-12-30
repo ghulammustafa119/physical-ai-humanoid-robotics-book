@@ -96,5 +96,6 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+        extra = "allow"  # Allow extra fields from .env
 
 settings = Settings()
