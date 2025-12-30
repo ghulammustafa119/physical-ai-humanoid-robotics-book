@@ -53,7 +53,7 @@ export default function ChatPanel(): JSX.Element {
       const data = await response.json();
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.response_text || data.responseText || 'Sorry, I could not process your request.',
+        content: data.response || data.response_text || data.responseText || 'Sorry, I could not process your request.',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, assistantMessage]);
