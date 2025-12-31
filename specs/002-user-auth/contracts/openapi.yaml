@@ -1,0 +1,362 @@
+openapi: 3.1.0
+info:
+  title: User Authentication API
+  description: API for user authentication, profile management, and personalization
+  version: 1.0.0
+  contact:
+    name: Physical AI Book Support
+    email: support@physical-ai-book.example.com
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Development server
+  - url: https://api.physical-ai-book.example.com/api/v1
+    description: Production server
+
+tags:
+  - name: Authentication
+    description: User signup, signin, and session management
+  - name: Profile
+    description: User profile and personalization settings
+
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Authentication
+      summary: Create a new user account
+      description: Registers a new user with email and password, optionally collecting profile data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+            example:
+              email: user@example.com
+              password: SecurePass123
+              profile:
+                programmingLevel: intermediate
+                pythonLevel: strong
+                aiMlLevel: basic
+                roboticsLevel: none
+                systemType: laptop
+                gpuAvailability: integrated
+                hardwareAccess: simulators
+                simulatorExperience: ["gazebo"]
+      responses:
+        '201':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/signin:
+    post:
+      tags:
+        - Authentication
+      summary: Authenticate user
+      description: Signs in an existing user with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+            example:
+              email: user@example.com
+              password: SecurePass123
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/signout:
+    post:
+      tags:
+        - Authentication
+      summary: End user session
+      description: Signs out the current user and invalidates the session
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successfully signed out
+        '401':
+          description: Not authenticated
+
+  /auth/session:
+    get:
+      tags:
+        - Authentication
+      summary: Get current session
+      description: Returns the current user's session information
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Session information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '401':
+          description: No active session
+
+  /auth/profile:
+    get:
+      tags:
+        - Profile
+      summary: Get user profile
+      description: Returns the authenticated user's profile including personalization data
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+        '401':
+          description: Not authenticated
+
+    put:
+      tags:
+        - Profile
+      summary: Update user profile
+      description: Updates the authenticated user's profile data
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdateRequest'
+            example:
+              programmingLevel: advanced
+              pythonLevel: strong
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Not authenticated
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    # Request schemas
+    SignUpRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          example: user@example.com
+        password:
+          type: string
+          minLength: 8
+          maxLength: 128
+          example: SecurePass123
+        profile:
+          $ref: '#/components/schemas/PartialProfile'
+
+    SignInRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          example: SecurePass123
+
+    PartialProfile:
+      type: object
+      properties:
+        programmingLevel:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        pythonLevel:
+          type: string
+          enum: [none, basic, strong]
+        aiMlLevel:
+          type: string
+          enum: [none, basic, applied]
+        roboticsLevel:
+          type: string
+          enum: [none, academic, practical]
+        systemType:
+          type: string
+          enum: [laptop, desktop, cloud]
+        gpuAvailability:
+          type: string
+          enum: [none, integrated, nvidia_cuda]
+        hardwareAccess:
+          type: string
+          enum: [none, simulators, real]
+        simulatorExperience:
+          type: array
+          items:
+            type: string
+            enum: [gazebo, isaac_sim, unity]
+
+    ProfileUpdateRequest:
+      type: object
+      properties:
+        programmingLevel:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        pythonLevel:
+          type: string
+          enum: [none, basic, strong]
+        aiMlLevel:
+          type: string
+          enum: [none, basic, applied]
+        roboticsLevel:
+          type: string
+          enum: [none, academic, practical]
+        systemType:
+          type: string
+          enum: [laptop, desktop, cloud]
+        gpuAvailability:
+          type: string
+          enum: [none, integrated, nvidia_cuda]
+        hardwareAccess:
+          type: string
+          enum: [none, simulators, real]
+        simulatorExperience:
+          type: array
+          items:
+            type: string
+            enum: [gazebo, isaac_sim, unity]
+
+    # Response schemas
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+        session:
+          type: object
+          properties:
+            token:
+              type: string
+            expiresAt:
+              type: string
+              format: date-time
+        profileCompleteness:
+          type: number
+
+    SessionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    UserProfileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        programmingLevel:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        pythonLevel:
+          type: string
+          enum: [none, basic, strong]
+        aiMlLevel:
+          type: string
+          enum: [none, basic, applied]
+        roboticsLevel:
+          type: string
+          enum: [none, academic, practical]
+        systemType:
+          type: string
+          enum: [laptop, desktop, cloud]
+        gpuAvailability:
+          type: string
+          enum: [none, integrated, nvidia_cuda]
+        hardwareAccess:
+          type: string
+          enum: [none, simulators, real]
+        simulatorExperience:
+          type: array
+          items:
+            type: string
+        profileCompleteness:
+          type: number
+        updatedAt:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        code:
+          type: string

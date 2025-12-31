@@ -37,13 +37,28 @@ const config: Config = {
 
   themeConfig: {
     navbar: {
-      title: 'Test Site',
+      title: 'Physical AI & Humanoid Robotics',
       items: [
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          to: '/signup',
+          label: 'Sign Up',
+          position: 'right',
+        },
+        {
+          to: '/signin',
+          label: 'Sign In',
+          position: 'right',
+        },
+        {
+          to: '/profile',
+          label: 'Profile',
+          position: 'right',
         },
       ],
     },
