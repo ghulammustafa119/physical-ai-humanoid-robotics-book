@@ -4,6 +4,7 @@ from ..middleware.error_handler import LoggingMiddleware
 from .v1.chat import router as chat_router
 from .v1.text_selection import router as text_selection_router
 from .v1.book_content import router as book_content_router
+from .v1.auth import router as auth_router
 from ..config.settings import settings
 
 
@@ -22,12 +23,10 @@ def create_app() -> FastAPI:
     # Add CORS middleware
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.allowed_origins.split(","),
+        allow_origins=["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
-        # Add exposed headers for custom response headers
-        # expose_headers=["Access-Control-Allow-Origin"]
     )
 
     # Include API routers
@@ -35,6 +34,12 @@ def create_app() -> FastAPI:
         chat_router,
         prefix=settings.api_v1_prefix,
         tags=["chat"]
+    )
+
+    app.include_router(
+        auth_router,
+        prefix=settings.api_v1_prefix,
+        tags=["authentication"]
     )
 
     app.include_router(

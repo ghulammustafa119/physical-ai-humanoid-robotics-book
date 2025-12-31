@@ -235,6 +235,20 @@ class AuthService:
             if hasattr(profile, field):
                 setattr(profile, field, value)
 
+        # Recalculate completeness score
+        total_fields = 8
+        filled_fields = 0
+        if profile.programming_level: filled_fields += 1
+        if profile.python_level: filled_fields += 1
+        if profile.ai_ml_level: filled_fields += 1
+        if profile.robotics_level: filled_fields += 1
+        if profile.system_type: filled_fields += 1
+        if profile.gpu_availability: filled_fields += 1
+        if profile.hardware_access: filled_fields += 1
+        if profile.simulator_experience and len(profile.simulator_experience) > 0: filled_fields += 1
+
+        profile.profile_completeness = round(filled_fields / total_fields, 2)
+
         self.db.add(profile)
         self.db.commit()
         self.db.refresh(profile)

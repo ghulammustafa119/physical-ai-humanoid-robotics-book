@@ -29,14 +29,17 @@ const Profile: React.FC = () => {
   const [editLoading, setEditLoading] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setProfile(user?.profile || null);
-      setLoading(false);
-    } else {
-      setError('Not authenticated. Please sign in.');
+    // If auth is done loading, update profile and stop loading screen
+    if (!authLoading) {
+      if (user) {
+        setProfile(user.profile || null);
+        setError(null);
+      } else {
+        setError('Not authenticated. Please sign in.');
+      }
       setLoading(false);
     }
-  }, [user]);
+  }, [user, authLoading]);
 
   // Profile is loaded from context, no need to fetch separately
   // Use refreshProfile function when we need to reload profile data
@@ -103,6 +106,15 @@ const Profile: React.FC = () => {
   const handleCancel = () => {
     setIsEditing(false);
     setEditData({});
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(); // From useAuth context
+      window.location.href = '/physical-ai-humanoid-robotics-book/';
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
   };
 
   if (loading) {

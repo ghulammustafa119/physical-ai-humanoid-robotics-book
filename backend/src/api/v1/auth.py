@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header, Request
 from sqlmodel import Session
 from typing import Optional
 from ...db.dependency import get_db_session
@@ -22,12 +22,6 @@ async def signup(
     try:
         auth_service = AuthService(db)
         user_response, session_token = auth_service.create_user(user_create)
-
-        # Set session token in response header or return in response body
-        # For now, returning in response body
-        response = user_response.dict()
-        response["session_token"] = session_token
-        response["profile_completeness"] = 0.0  # New user has empty profile
 
         return user_response
     except ValueError as e:
@@ -62,11 +56,15 @@ async def signin(
 
     user_response, session_token = result
 
+    # Calculate expiry properly using timedelta
+    from datetime import timedelta
+    expires_at = datetime.utcnow() + timedelta(days=7)
+
     return {
         "user": user_response,
         "session": {
             "token": session_token,
-            "expires_at": datetime.utcnow() + (datetime.utcnow() - datetime(1970, 1, 1)) + 7*24*3600  # 7 days from now
+            "expires_at": expires_at
         },
         "profile_completeness": 0.0  # Need to fetch actual profile completeness
     }
@@ -114,14 +112,30 @@ async def get_session(
 
 @router.get("/auth/profile", response_model=UserProfileResponse)
 async def get_profile(
-    user_id: str,  # This would typically be extracted from validated token
+    request: Request,
     db: Session = Depends(get_db_session)
 ):
     """
-    Get user profile information
+    Get user profile information using session token from Authorization header
     """
+    authorization = request.headers.get("Authorization")
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Session token required in Authorization header"
+        )
+
+    token = authorization.split(" ")[1]
     auth_service = AuthService(db)
-    profile = auth_service.get_user_profile(user_id)
+    session_info = auth_service.validate_session(token)
+
+    if not session_info:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired session"
+        )
+
+    profile = auth_service.get_user_profile(session_info.user_id)
 
     if not profile:
         raise HTTPException(
@@ -149,19 +163,34 @@ async def get_profile(
 
 @router.put("/auth/profile", response_model=UserProfileResponse)
 async def update_profile(
-    user_id: str,  # This would typically be extracted from validated token
+    request: Request,
     profile_update: UserProfileUpdate,
     db: Session = Depends(get_db_session)
 ):
     """
-    Update user profile information
+    Update user profile information using token from Authorization header
     """
+    authorization = request.headers.get("Authorization")
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Session token required in Authorization header"
+        )
+
+    token = authorization.split(" ")[1]
     auth_service = AuthService(db)
+    session_info = auth_service.validate_session(token)
+
+    if not session_info:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired session"
+        )
 
     # Convert Pydantic model to dict for update
     profile_data = profile_update.dict(exclude_unset=True)
 
-    updated_profile = auth_service.update_user_profile(user_id, profile_data)
+    updated_profile = auth_service.update_user_profile(session_info.user_id, profile_data)
 
     if not updated_profile:
         raise HTTPException(

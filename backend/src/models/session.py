@@ -4,16 +4,22 @@ from pydantic import BaseModel
 from sqlmodel import SQLModel, Field
 
 
+import uuid
+
 class SessionBase(SQLModel):
     """Base model for session with common fields"""
-    user_id: str
-    token: str
-    expires_at: datetime
 
 
 class Session(SessionBase, table=True):
     """SQLModel for session table in database"""
-    id: Optional[str] = Field(default=None, primary_key=True)
+    id: Optional[str] = Field(
+        default_factory=lambda: str(uuid.uuid4()),
+        primary_key=True,
+        index=True
+    )
+    user_id: str
+    token: str
+    expires_at: datetime
     created_at: datetime = Field(default_factory=datetime.utcnow)
     ip_address: Optional[str] = None
     user_agent: Optional[str] = None

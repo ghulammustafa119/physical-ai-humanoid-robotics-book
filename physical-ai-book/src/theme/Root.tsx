@@ -1,6 +1,7 @@
 import React from 'react';
 import { AuthProvider } from '../components/auth/AuthProvider';
 import ChatPanel from '../components/ChatPanel';
+import ProfileCompletionPopup from '../components/auth/ProfileCompletionPopup';
 
 // Default implementation, that you can customize
 export default function Root({children}) {
@@ -8,6 +9,7 @@ export default function Root({children}) {
     <AuthProvider>
       <>
         {children}
+        <ProfileCompletionPopup />
         <ChatPanel />
       </>
     </AuthProvider>

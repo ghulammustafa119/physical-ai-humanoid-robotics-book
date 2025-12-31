@@ -42,7 +42,10 @@ const SignIn: React.FC = () => {
     try {
       const success = await signIn(formData.email, formData.password);
 
-      if (!success) {
+      if (success) {
+        // Redirect to profile or home page after successful signin
+        window.location.href = '/physical-ai-humanoid-robotics-book/profile';
+      } else {
         setError('Signin failed. Please check your credentials and try again.');
       }
     } catch (err: any) {

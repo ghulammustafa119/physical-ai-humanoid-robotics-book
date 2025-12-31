@@ -167,8 +167,8 @@ class PersonalizationService:
             readiness['recommendations'] = ['Start with introductory AI/ML tutorials']
 
         if topic.lower() in ['gpu programming', 'cuda'] and not context.has_gpu:
-            readiness['ready'] = True but 'with limitations'
-            readiness['recommendations'] = ['Consider cloud GPU services for hands-on practice']
+            readiness['ready'] = True
+            readiness['recommendations'].append('Consider cloud GPU services for hands-on practice (limited local GPU detected)')
 
         return readiness
 

@@ -84,7 +84,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         setUser({
           email: data.user.email,
-          profile: data.user.profile || null,
+          profile: data.user.profile || data.user, // Fallback to user object if profile missing
         });
       }
 
@@ -106,7 +106,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, profile }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -115,17 +115,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error(data.detail || 'Signup failed');
       }
 
-      // Store session token and user info
-      if (data.session && data.session.token) {
-        setAuthTokens(data.session.token, data.user.email);
-
-        setUser({
-          email: data.user.email,
-          profile: data.user.profile || null,
-        });
-      }
-
-      return true;
+      // Automatically sign in after signup
+      return await signIn(email, password);
     } catch (error) {
       console.error('Sign up error:', error);
       return false;
@@ -154,8 +145,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     try {
-      const profile = await getUserProfile();
       const email = getUserEmail();
+      const profile = await getUserProfile();
 
       setUser({
         email,
@@ -163,9 +154,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
     } catch (error) {
       console.error('Error refreshing profile:', error);
-      // If profile fetch fails, user might not be authenticated anymore
-      clearAuthTokens();
-      setUser(null);
+      // Don't clear tokens here to avoid infinite loops on 404/500
     }
   };
 

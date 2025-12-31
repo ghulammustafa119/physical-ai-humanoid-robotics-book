@@ -137,6 +137,7 @@ The authentication system must not prevent non-logged-in users from accessing th
 - **FR-013**: System MUST allow logged-in users to update their profile and background information.
 - **FR-014**: System MUST NOT block access to static book content for non-authenticated users.
 - **FR-015**: System MUST present sign-up prompts on personalization features for non-logged-in users.
+- **FR-016**: System MUST provide verifiable personalized chatbot responses based on authenticated user background, enabling testable validation of personalization effectiveness.
 
 ### Key Entities
 

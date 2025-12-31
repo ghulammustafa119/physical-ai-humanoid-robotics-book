@@ -46,18 +46,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          to: '/signup',
-          label: 'Sign Up',
-          position: 'right',
-        },
-        {
-          to: '/signin',
-          label: 'Sign In',
-          position: 'right',
-        },
-        {
-          to: '/profile',
-          label: 'Profile',
+          type: 'custom-auth-navbar-item',
           position: 'right',
         },
       ],

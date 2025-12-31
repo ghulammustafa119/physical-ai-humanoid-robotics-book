@@ -183,19 +183,20 @@
 
 .userEmail {
   font-weight: bold;
-  color: #333;
+  color: var(--ifm-navbar-link-color, #333);
 }
 
 .navLink {
-  color: #007cba;
+  color: var(--ifm-navbar-link-color, #007cba);
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .navLink:hover {
-  background-color: #f0f0f0;
+  background-color: var(--ifm-navbar-link-hover-bg, #f0f0f0);
+  color: var(--ifm-navbar-link-hover-color, #005a87);
   text-decoration: none;
 }
 
@@ -230,4 +231,68 @@
     align-items: flex-start;
     gap: 0.5rem;
   }
+}
+
+/* Modal / Popup Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modalContent {
+  background-color: var(--ifm-background-surface-color, #ffffff);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: center;
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.modalTitle {
+  margin-top: 0;
+  color: var(--ifm-color-primary);
+}
+
+.progressBar {
+  width: 100%;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--ifm-color-primary);
+  transition: width 0.3s ease;
+}
+
+.modalFooter {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }

@@ -74,7 +74,7 @@
 
 ### Task 2.1: Create Auth Service with Better Auth Integration
 
-**Description**: Implement authentication service using Better Auth for session management
+**Description**: Implement authentication service using Better Auth Server SDK for session management and user authentication, including server SDK initialization and session verification middleware
 
 **Status**: 🟢 COMPLETE | **Priority**: P1 | **Est. Time**: 4h
 

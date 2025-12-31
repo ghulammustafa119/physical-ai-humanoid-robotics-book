@@ -5,8 +5,19 @@ from sqlmodel import SQLModel, Field
 from sqlalchemy import JSON
 
 
+import uuid
+
 class UserProfileBase(SQLModel):
     """Base model for user profile with common fields"""
+
+
+class UserProfile(UserProfileBase, table=True):
+    """SQLModel for user profile table in database"""
+    id: Optional[str] = Field(
+        default_factory=lambda: str(uuid.uuid4()),
+        primary_key=True,
+        index=True
+    )
     user_id: str
     programming_level: Optional[str] = None
     python_level: Optional[str] = None
@@ -17,11 +28,6 @@ class UserProfileBase(SQLModel):
     hardware_access: Optional[str] = None
     simulator_experience: Optional[List[str]] = Field(default_factory=list, sa_type=JSON)
     profile_completeness: float = 0.0
-
-
-class UserProfile(UserProfileBase, table=True):
-    """SQLModel for user profile table in database"""
-    id: Optional[str] = Field(default=None, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -67,8 +73,8 @@ class UserProfileUpdate(SQLModel):
 
 class UserProfileResponse(BaseModel):
     """Response model for user profile"""
-    id: str
-    user_id: str
+    id: Optional[str] = None
+    user_id: Optional[str] = None
     programming_level: Optional[str] = None
     python_level: Optional[str] = None
     ai_ml_level: Optional[str] = None
@@ -76,10 +82,10 @@ class UserProfileResponse(BaseModel):
     system_type: Optional[str] = None
     gpu_availability: Optional[str] = None
     hardware_access: Optional[str] = None
-    simulator_experience: List[str] = []
-    profile_completeness: float
-    created_at: datetime
-    updated_at: datetime
+    simulator_experience: Optional[List[str]] = []
+    profile_completeness: Optional[float] = 0.0
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
