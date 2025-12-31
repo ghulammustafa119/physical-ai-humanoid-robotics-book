@@ -45,8 +45,14 @@ class Settings(BaseSettings):
     max_query_length: int = 1000
     max_selection_length: int = 5000
 
+    # Auth settings
+    secret_key: str
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+
     class Config:
         env_file = ".env"
+        extra = "allow"  # Allow extra fields to avoid validation errors
 
 
 settings = Settings()
