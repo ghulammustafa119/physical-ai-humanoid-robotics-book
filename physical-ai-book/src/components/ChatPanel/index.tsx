@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useAuth } from '../auth/AuthProvider';
 import styles from './styles.module.css';
 
 interface Message {
@@ -8,6 +9,7 @@ interface Message {
 }
 
 export default function ChatPanel(): JSX.Element {
+  const { user } = useAuth(); // Get user context to access personalization
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -35,6 +37,39 @@ export default function ChatPanel(): JSX.Element {
     setIsLoading(true);
 
     try {
+      // Get personalization context if user is authenticated
+      let personalizationContext = null;
+      if (user) {
+        try {
+          // Fetch personalization context from the API
+          const profileResponse = await fetch('http://localhost:8000/api/v1/auth/profile', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (profileResponse.ok) {
+            const profileData = await profileResponse.json();
+            personalizationContext = {
+              programming_level: profileData.programming_level,
+              python_level: profileData.python_level,
+              ai_ml_level: profileData.ai_ml_level,
+              robotics_level: profileData.robotics_level,
+              system_type: profileData.system_type,
+              gpu_availability: profileData.gpu_availability,
+              hardware_access: profileData.hardware_access,
+              simulator_experience: profileData.simulator_experience,
+              profile_completeness: profileData.profile_completeness,
+            };
+          }
+        } catch (profileError) {
+          console.error('Error fetching profile for personalization:', profileError);
+          // Continue without personalization context if profile fetch fails
+        }
+      }
+
       const response = await fetch('http://localhost:8000/api/v1/chat', {
         method: 'POST',
         headers: {
@@ -43,6 +78,7 @@ export default function ChatPanel(): JSX.Element {
         body: JSON.stringify({
           query: input,
           sessionId: null,
+          personalization_context: personalizationContext, // Include personalization context
         }),
       });
 

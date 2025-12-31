@@ -5,6 +5,8 @@ from datetime import datetime
 from ..models.response import ChatResponse, SourceReference, ChatResponseCreate
 from ..models.text_selection import TextSelection
 from ..config.settings import settings
+from .personalization_service import PersonalizationService
+from sqlmodel import Session
 
 # Try to import available AI services
 AI_SERVICE = None
@@ -26,22 +28,28 @@ logger = logging.getLogger(__name__)
 class RAGService:
     """
     Service class for handling RAG (Retrieval Augmented Generation) operations
-    with support for text selection restriction
+    with support for text selection restriction and user personalization
     """
 
-    def __init__(self):
+    def __init__(self, db_session: Optional[Session] = None):
         # In a real implementation, this would initialize connections to
         # vector database (Qdrant), OpenAI client, etc.
-        pass
+        self.db_session = db_session
+        if db_session:
+            self.personalization_service = PersonalizationService(db_session)
+        else:
+            self.personalization_service = None
 
     async def query_with_selected_text(
         self,
         query: str,
         selected_text: Optional[str] = None,
-        book_section: Optional[str] = None
+        book_section: Optional[str] = None,
+        user_id: Optional[str] = None,  # Added for personalization support
+        personalization_context: Optional[Dict[str, Any]] = None
     ) -> ChatResponse:
         """
-        Process a query with optional restriction to selected text
+        Process a query with optional restriction to selected text and user personalization
         """
         try:
             # Validate input
@@ -50,6 +58,10 @@ class RAGService:
 
             if len(query) > settings.max_query_length:
                 raise ValueError(f"Query exceeds maximum length of {settings.max_query_length} characters")
+
+            # Use personalization context if provided (from API), otherwise try to get from service
+            if not personalization_context and user_id and self.personalization_service:
+                personalization_context = self.personalization_service.get_context_for_rag(user_id)
 
             # Handle large selected text by truncating if necessary
             processed_selected_text = selected_text
@@ -63,7 +75,7 @@ class RAGService:
                 # 2. Perform semantic search within the selected text
                 # 3. Generate response based on the selected text content
                 response_text = await self._generate_response_from_selected_text(
-                    query, processed_selected_text, book_section
+                    query, processed_selected_text, book_section, personalization_context
                 )
 
                 # Create sources based on the selected text
@@ -73,7 +85,7 @@ class RAGService:
                 # 1. Perform semantic search across the entire book content
                 # 2. Generate response based on the broader context
                 response_text = await self._generate_response_from_full_content(
-                    query, book_section
+                    query, book_section, personalization_context
                 )
 
                 # Create sources from the broader content
@@ -136,32 +148,68 @@ class RAGService:
         self,
         query: str,
         selected_text: str,
-        book_section: Optional[str] = None
+        book_section: Optional[str] = None,
+        personalization_context: Optional[Dict[str, Any]] = None
     ) -> str:
         """
-        Generate a response based only on the selected text
+        Generate a response based only on the selected text with optional personalization
         """
         try:
-            # Use available AI service to generate the response
-            if AI_SERVICE == 'cohere':
-                result = await cohere_service.generate_response(
-                    prompt=query,
-                    context=selected_text
-                )
-                return result
-            elif AI_SERVICE == 'gemini':
-                result = await gemini_service.generate_response(
-                    prompt=query,
-                    context=selected_text
-                )
-                return result
+            # Prepare the prompt with personalization context if available
+            if personalization_context and personalization_context.get('personalization_enabled', False):
+                # Add personalization context to the prompt
+                context_with_personalization = f"""
+                {personalization_context.get('system_prompt_extension', '')}
+
+                Original context from the book:
+                {selected_text}
+
+                User Question: {query}
+
+                Please answer the question based on the provided context, adapting your response to the user's background and experience level.
+                """
+
+                # Use available AI service to generate the response with personalization
+                if AI_SERVICE == 'cohere':
+                    result = await cohere_service.generate_response(
+                        prompt=query,
+                        context=context_with_personalization
+                    )
+                    return result
+                elif AI_SERVICE == 'gemini':
+                    result = await gemini_service.generate_response(
+                        prompt=query,
+                        context=context_with_personalization
+                    )
+                    return result
+                else:
+                    result = await openai_service.generate_response(
+                        query=query,
+                        context=context_with_personalization,
+                        selected_text=selected_text
+                    )
+                    return result["response_text"]
             else:
-                result = await openai_service.generate_response(
-                    query=query,
-                    context=selected_text,
-                    selected_text=selected_text
-                )
-                return result["response_text"]
+                # Use available AI service to generate the response without personalization
+                if AI_SERVICE == 'cohere':
+                    result = await cohere_service.generate_response(
+                        prompt=query,
+                        context=selected_text
+                    )
+                    return result
+                elif AI_SERVICE == 'gemini':
+                    result = await gemini_service.generate_response(
+                        prompt=query,
+                        context=selected_text
+                    )
+                    return result
+                else:
+                    result = await openai_service.generate_response(
+                        query=query,
+                        context=selected_text,
+                        selected_text=selected_text
+                    )
+                    return result["response_text"]
         except Exception as e:
             logger.error(f"Error generating response from selected text: {str(e)}")
             # Return a fallback response
@@ -170,31 +218,65 @@ class RAGService:
     async def _generate_response_from_full_content(
         self,
         query: str,
-        book_section: Optional[str] = None
+        book_section: Optional[str] = None,
+        personalization_context: Optional[Dict[str, Any]] = None
     ) -> str:
         """
-        Generate a response based on the full book content
+        Generate a response based on the full book content with optional personalization
         """
         try:
-            # Use available AI service to generate the response
-            if AI_SERVICE == 'cohere':
-                result = await cohere_service.generate_response(
-                    prompt=query,
-                    context=f"Book section: {book_section}" if book_section else None
-                )
-                return result
-            elif AI_SERVICE == 'gemini':
-                result = await gemini_service.generate_response(
-                    prompt=query,
-                    context=f"Book section: {book_section}" if book_section else None
-                )
-                return result
+            # Prepare the prompt with personalization context if available
+            if personalization_context and personalization_context.get('personalization_enabled', False):
+                # Add personalization context to the prompt
+                context_with_personalization = f"""
+                {personalization_context.get('system_prompt_extension', '')}
+
+                Book section: {book_section if book_section else 'Full content'}
+
+                User Question: {query}
+
+                Please answer the question based on the book content, adapting your response to the user's background and experience level.
+                """
+
+                # Use available AI service to generate the response with personalization
+                if AI_SERVICE == 'cohere':
+                    result = await cohere_service.generate_response(
+                        prompt=query,
+                        context=context_with_personalization
+                    )
+                    return result
+                elif AI_SERVICE == 'gemini':
+                    result = await gemini_service.generate_response(
+                        prompt=query,
+                        context=context_with_personalization
+                    )
+                    return result
+                else:
+                    result = await openai_service.generate_response(
+                        query=query,
+                        context=context_with_personalization
+                    )
+                    return result["response_text"]
             else:
-                result = await openai_service.generate_response(
-                    query=query,
-                    context=f"Book section: {book_section}" if book_section else None
-                )
-                return result["response_text"]
+                # Use available AI service to generate the response without personalization
+                if AI_SERVICE == 'cohere':
+                    result = await cohere_service.generate_response(
+                        prompt=query,
+                        context=f"Book section: {book_section}" if book_section else None
+                    )
+                    return result
+                elif AI_SERVICE == 'gemini':
+                    result = await gemini_service.generate_response(
+                        prompt=query,
+                        context=f"Book section: {book_section}" if book_section else None
+                    )
+                    return result
+                else:
+                    result = await openai_service.generate_response(
+                        query=query,
+                        context=f"Book section: {book_section}" if book_section else None
+                    )
+                    return result["response_text"]
         except Exception as e:
             logger.error(f"Error generating response from full content: {str(e)}")
             # Return a fallback response

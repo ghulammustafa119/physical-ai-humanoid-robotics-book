@@ -34,6 +34,8 @@ This project is an AI-native book focusing on Physical AI and Humanoid Robotics 
 - **Module 3**: AI-Robot Brain (NVIDIA Isaac™) - AI decision-making systems for humanoid robots
 - **Module 4**: Vision-Language-Action (VLA) - Connecting perception to action execution
 - **Interactive RAG Chatbot**: Ask questions about book content with source attribution
+- **User Authentication & Personalization**: Sign up, sign in, and personalized learning experience based on user background
+- **Background-Aware Learning**: System adapts content and responses based on user's programming, AI/ML, robotics experience, and hardware access
 - **Proper Docusaurus Integration**: Full navigation, proper frontmatter, and optimized for search
 - **RAG-Ready Content**: Structured for semantic search and retrieval-augmented generation
 - **Code Examples**: All examples in Python with proper formatting and explanations
@@ -43,6 +45,7 @@ This project is an AI-native book focusing on Physical AI and Humanoid Robotics 
 - **Platform**: Docusaurus v3.1.0
 - **Deployment**: GitHub Pages
 - **Backend**: FastAPI + Python 3.11+
+- **Authentication**: Better Auth for user management and session handling
 - **Database**: Neon Serverless Postgres
 - **Vector DB**: Qdrant Cloud
 - **AI Model**: Cohere API (command-r-08-2024)
@@ -139,6 +142,12 @@ This project is an AI-native book focusing on Physical AI and Humanoid Robotics 
    - Look for the purple chat button in the bottom-right corner
    - Click to open the AI chat assistant
    - Ask questions about robotics, ROS 2, or book content
+
+4. **Using Authentication & Personalization**:
+   - Click "Sign Up" or "Sign In" in the top navigation bar
+   - Create an account and fill in your background information (programming level, AI/ML experience, hardware access, etc.)
+   - Your profile will be used to personalize chatbot responses and content recommendations
+   - Access your profile page to update your background information at any time
 
 ### Testing the Chat API
 

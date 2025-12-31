@@ -21,6 +21,7 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = None
     bookSection: Optional[str] = None
     book_section: Optional[str] = None
+    personalization_context: Optional[dict] = None
 
 
 @router.post("/chat", response_model=ChatResponse)
@@ -35,6 +36,7 @@ async def chat_endpoint(
         query = request.query
         selected_text = request.selected_text or request.selectedText
         book_section = request.book_section or request.bookSection
+        personalization_context = request.personalization_context
 
         # Validate input
         if not query or len(query.strip()) == 0:
@@ -47,7 +49,8 @@ async def chat_endpoint(
         response = await rag_service.query_with_selected_text(
             query=query,
             selected_text=selected_text,
-            book_section=book_section
+            book_section=book_section,
+            personalization_context=personalization_context
         )
 
         # In a real implementation, you would:
