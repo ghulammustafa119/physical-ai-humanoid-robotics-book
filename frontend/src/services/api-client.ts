@@ -1,7 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import { ChatRequest, ChatResponse, TextSelection } from '../types/chat';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? (process.env.REACT_APP_API_BASE_URL || 'https://ghulammustafabhutto-gmbhutto.hf.space') // Hugging Face Backend URL
+    : (process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000');
 
 class ApiClient {
   private client: AxiosInstance;
@@ -10,6 +13,7 @@ class ApiClient {
     this.client = axios.create({
       baseURL: API_BASE_URL,
       timeout: 30000, // 30 second timeout
+      withCredentials: true, // Required for cross-site cookies
       headers: {
         'Content-Type': 'application/json',
       },

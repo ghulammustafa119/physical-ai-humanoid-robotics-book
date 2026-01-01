@@ -21,9 +21,18 @@ def create_app() -> FastAPI:
     app.add_middleware(LoggingMiddleware)
 
     # Add CORS middleware
+    # Allow local development and GitHub Pages production frontend
+    origins = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3000",
+        "https://ghulammustafa119.github.io",
+        "https://ghulammustafa119.github.io/physical-ai-humanoid-robotics-book",
+    ]
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000"],
+        allow_origins=origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

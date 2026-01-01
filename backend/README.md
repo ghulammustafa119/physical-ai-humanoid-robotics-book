@@ -13,6 +13,50 @@ This is the backend API for the Physical AI & Humanoid Robotics Book RAG chatbot
 - Content synchronization
 - User feedback collection
 
+## Deployment
+
+### Hugging Face Spaces (Backend)
+
+The backend is configured for deployment as a Python SDK Space on Hugging Face.
+
+#### Hugging Face Deployment Steps:
+
+1. Create a new Space on [Hugging Face](https://huggingface.co/new-space).
+2. Select **Python SDK** as the Space SDK.
+3. Commit the `backend/` directory content (including `app.py`, `src/`, etc.) to the Space repository.
+4. Set the following **Secrets** in your Space settings:
+   - `DATABASE_URL`: Your PostgreSQL connection string (e.g., from Neon).
+   - `SECRET_KEY`: A secure random string for session tokens.
+   - `COHERE_API_KEY`: Your Cohere API key.
+   - `ENVIRONMENT`: Set to `production`.
+5. The Space will automatically deploy using `app.py` as the entrypoint on port 7860.
+
+#### Production Auth Architecture:
+
+- **Frontend**: GitHub Pages (`https://ghulammustafa119.github.io/physical-ai-humanoid-robotics-book`)
+- **Backend**: Hugging Face Spaces (`https://<your-space-name>.hf.space`)
+- **Cross-Domain Auth**: Enabled via CORS `allow_origins`, `allow_credentials=True`, and Secure HTTP-only cookies with `SameSite=None`.
+
+**Architecture Diagram:**
+```text
+[ Browser ] <---(HTTPS)---> [ GitHub Pages (Frontend) ]
+    |                              ^
+    | (Fetch with credentials)      |
+    v                              |
+[ Hugging Face Space (Backend) ] --|
+    |                              |
+    | <---(SQL)--- [ Neon Postgres ]
+```
+
+### Environment Variables for Production
+
+| Variable | Description | Recommended for Prod |
+|----------|-------------|----------------------|
+| `DATABASE_URL` | Postgres connection string | Neon Serverless |
+| `SECRET_KEY` | Secure random string | `openssl rand -hex 32` |
+| `ENVIRONMENT` | Deployment environment | `production` |
+| `ALLOWED_ORIGINS` | CORS origins | Configured in `main.py` |
+
 ## Prerequisites
 
 - Python 3.11+

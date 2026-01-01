@@ -3,6 +3,12 @@
  * Handles authentication state management and API communication with Better Auth
  */
 
+// API Base URL configuration
+export const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://ghulammustafabhutto-gmbhutto.hf.space' // Hugging Face Backend URL
+    : 'http://localhost:8000';
+
 // Get auth token from localStorage
 export const getAuthToken = (): string | null => {
   return localStorage.getItem('auth_token');
@@ -40,12 +46,13 @@ export const getUserProfile = async (): Promise<any | null> => {
   }
 
   try {
-    const response = await fetch('http://localhost:8000/api/v1/auth/profile', {
+    const response = await fetch(`${API_BASE_URL}/api/v1/auth/profile`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
+      credentials: 'include', // Support session cookies
     });
 
     if (!response.ok) {
@@ -68,13 +75,14 @@ export const updateUserProfile = async (profileData: Partial<any>): Promise<any>
   }
 
   try {
-    const response = await fetch('http://localhost:8000/api/v1/auth/profile', {
+    const response = await fetch(`${API_BASE_URL}/api/v1/auth/profile`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(profileData),
+      credentials: 'include', // Support session cookies
     });
 
     if (!response.ok) {
@@ -98,12 +106,13 @@ export const signOut = async (): Promise<void> => {
   }
 
   try {
-    await fetch('http://localhost:8000/api/v1/auth/signout', {
+    await fetch(`${API_BASE_URL}/api/v1/auth/signout`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
+      credentials: 'include', // Support session cookies
     });
   } catch (error) {
     console.error('Error during signout:', error);

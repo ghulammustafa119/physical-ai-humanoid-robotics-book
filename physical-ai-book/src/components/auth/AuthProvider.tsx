@@ -11,6 +11,7 @@ import {
   isAuthenticated as checkIsAuthenticated,
   getUserProfile,
   signOut as signOutAPI,
+  API_BASE_URL,
 } from '../../utils/auth';
 
 interface AuthContextType {
@@ -64,11 +65,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setLoading(true);
 
-      const response = await fetch('http://localhost:8000/api/v1/auth/signin', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Support session cookies
         body: JSON.stringify({ email, password }),
       });
 
@@ -101,11 +103,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setLoading(true);
 
-      const response = await fetch('http://localhost:8000/api/v1/auth/signup', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Support session cookies
         body: JSON.stringify({ email, password }),
       });
 
