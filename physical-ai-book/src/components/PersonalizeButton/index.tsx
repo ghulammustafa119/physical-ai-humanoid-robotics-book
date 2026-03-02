@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from '@docusaurus/router';
-import Link from '@docusaurus/Link';
 import { useAuth } from '../auth/AuthProvider';
 import { personalizeChapter } from '../../utils/auth';
 import styles from './styles.module.css';
 
 export default function PersonalizeButton(): React.JSX.Element | null {
-  const { user, isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
   const [personalizedContent, setPersonalizedContent] = useState<string | null>(null);
   const [isPersonalizing, setIsPersonalizing] = useState(false);
@@ -92,80 +91,42 @@ export default function PersonalizeButton(): React.JSX.Element | null {
   // Don't render while auth is loading
   if (loading) return null;
 
-  // Not authenticated - show personalize and show original buttons
-  if (!isAuthenticated) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.banner}>
-          <p className={styles.bannerText}>
-            Sign in to personalize this chapter based on your experience level.
-          </p>
-          <div className={styles.btnGroup}>
-            <Link to="/signin" className={styles.personalizeBtn}>
-              Personalize for Me
-            </Link>
-            <Link to="/signin" className={styles.resetBtn}>
-              Show Original
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleClick = () => {
+    if (!isAuthenticated) {
+      window.location.href = '/physical-ai-humanoid-robotics-book/signin';
+      return;
+    }
+    handlePersonalize();
+  };
 
-  // Authenticated but profile incomplete
-  const completeness = user?.profile?.profile_completeness || 0;
-  if (completeness < 0.5) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.banner}>
-          <p className={styles.bannerText}>
-            Complete your profile ({Math.round(completeness * 100)}%) to unlock personalized content.
-          </p>
-          <Link to="/profile" className={styles.bannerLink}>
-            Complete Profile
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  // Authenticated with sufficient profile - show personalize button
   return (
     <div className={styles.container}>
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.personalizeBar}>
-        <div className={styles.barLeft}>
-          {userLevel && (
-            <span className={styles.levelBadge}>{userLevel}</span>
-          )}
-          <p className={styles.barLabel}>
-            {showPersonalized
-              ? 'Content personalized for your level'
-              : 'Adapt this chapter to your experience level'}
-          </p>
-        </div>
+        <p className={styles.barLabel}>
+          Click to personalize this chapter based on your experience level.
+        </p>
 
         <div className={styles.btnGroup}>
-          {showPersonalized ? (
+          <button
+            className={styles.personalizeBtn}
+            onClick={handleClick}
+            disabled={isPersonalizing}
+          >
+            {isPersonalizing ? (
+              <>
+                <span className={styles.spinner} />
+                Personalizing...
+              </>
+            ) : (
+              'Personalize for Me'
+            )}
+          </button>
+
+          {showPersonalized && (
             <button className={styles.resetBtn} onClick={handleReset}>
               Show Original
-            </button>
-          ) : (
-            <button
-              className={styles.personalizeBtn}
-              onClick={handlePersonalize}
-              disabled={isPersonalizing}
-            >
-              {isPersonalizing ? (
-                <>
-                  <span className={styles.spinner} />
-                  Personalizing...
-                </>
-              ) : (
-                'Personalize for Me'
-              )}
             </button>
           )}
         </div>
