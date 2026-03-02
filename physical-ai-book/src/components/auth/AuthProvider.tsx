@@ -66,9 +66,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
 
       if (error) {
-        const msg = (error as any).body?.error?.message
+        const errAny = error as any;
+        const msg = errAny.body?.message
+          || errAny.body?.error?.message
           || error.message
-          || 'Signin failed';
+          || 'Invalid email or password';
         throw new Error(msg);
       }
 
@@ -101,7 +103,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
 
       if (error) {
-        const msg = (error as any).body?.error?.message
+        const errAny = error as any;
+        const msg = errAny.body?.message
+          || errAny.body?.error?.message
           || error.message
           || 'Signup failed';
         throw new Error(msg);

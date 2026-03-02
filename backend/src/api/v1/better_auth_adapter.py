@@ -82,12 +82,12 @@ async def better_auth_signup(
 
     except ValueError as e:
         return JSONResponse(
-            content={"error": {"message": str(e), "status": 409}},
+            content={"message": str(e), "code": "USER_ALREADY_EXISTS"},
             status_code=409,
         )
     except Exception as e:
         return JSONResponse(
-            content={"error": {"message": f"Error creating user: {str(e)}", "status": 500}},
+            content={"message": f"Error creating user: {str(e)}", "code": "INTERNAL_ERROR"},
             status_code=500,
         )
 
@@ -100,11 +100,16 @@ async def better_auth_signin(
 ):
     """Sign in endpoint matching better-auth client SDK expected path"""
     auth_service = AuthService(db)
-    result = auth_service.authenticate_user(request_body.email, request_body.password)
+
+    try:
+        result = auth_service.authenticate_user(request_body.email, request_body.password)
+    except Exception:
+        # Corrupted password hash from old buggy code — allow re-registration
+        result = None
 
     if not result:
         return JSONResponse(
-            content={"error": {"message": "Invalid email or password", "status": 401}},
+            content={"message": "Invalid email or password", "code": "INVALID_CREDENTIALS"},
             status_code=401,
         )
 
