@@ -92,7 +92,7 @@ export default function PersonalizeButton(): React.JSX.Element | null {
   // Don't render while auth is loading
   if (loading) return null;
 
-  // Not authenticated - show sign in banner
+  // Not authenticated - show personalize and show original buttons
   if (!isAuthenticated) {
     return (
       <div className={styles.container}>
@@ -100,9 +100,14 @@ export default function PersonalizeButton(): React.JSX.Element | null {
           <p className={styles.bannerText}>
             Sign in to personalize this chapter based on your experience level.
           </p>
-          <Link to="/signin" className={styles.bannerLink}>
-            Sign In
-          </Link>
+          <div className={styles.btnGroup}>
+            <Link to="/signin" className={styles.personalizeBtn}>
+              Personalize for Me
+            </Link>
+            <Link to="/signin" className={styles.resetBtn}>
+              Show Original
+            </Link>
+          </div>
         </div>
       </div>
     );
