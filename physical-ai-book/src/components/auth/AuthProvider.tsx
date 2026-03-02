@@ -77,7 +77,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.detail || 'Signin failed');
+        let errorMsg = 'Signin failed';
+        if (typeof data.detail === 'string') {
+          errorMsg = data.detail;
+        } else if (Array.isArray(data.detail)) {
+          errorMsg = data.detail.map((e: any) => e.msg || e.message || String(e)).join(', ');
+        }
+        throw new Error(errorMsg);
       }
 
       // Store session token and user info
@@ -115,14 +121,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.detail || 'Signup failed');
+        // Handle FastAPI validation errors (array) and string errors
+        let errorMsg = 'Signup failed';
+        if (typeof data.detail === 'string') {
+          errorMsg = data.detail;
+        } else if (Array.isArray(data.detail)) {
+          errorMsg = data.detail.map((e: any) => e.msg || e.message || String(e)).join(', ');
+        }
+        throw new Error(errorMsg);
       }
 
       // Automatically sign in after signup
       return await signIn(email, password);
     } catch (error) {
       console.error('Sign up error:', error);
-      return false;
+      throw error;
     } finally {
       setLoading(false);
     }
