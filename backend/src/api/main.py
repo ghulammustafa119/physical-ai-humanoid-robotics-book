@@ -6,6 +6,7 @@ from .v1.text_selection import router as text_selection_router
 from .v1.book_content import router as book_content_router
 from .v1.auth import router as auth_router
 from .v1.personalize import router as personalize_router
+from .v1.translate import router as translate_router
 from .v1.better_auth_adapter import router as better_auth_router
 from ..config.settings import settings
 
@@ -69,6 +70,12 @@ def create_app() -> FastAPI:
         personalize_router,
         prefix=settings.api_v1_prefix,
         tags=["personalization"]
+    )
+
+    app.include_router(
+        translate_router,
+        prefix=settings.api_v1_prefix,
+        tags=["translation"]
     )
 
     # better-auth compatible routes at /api/auth/*

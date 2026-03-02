@@ -212,6 +212,8 @@ See `.specify/memory/constitution.md` for code quality, testing, performance, se
 ## Active Technologies
 - Python 3.11, TypeScript 5.0+ + FastAPI, OpenAI Agents SDK, Qdrant client, Neon Postgres, React 18+ (001-advanced-rag-chatbot)
 - Neon Serverless Postgres (relational data), Qdrant Cloud (vector embeddings), file storage for book content (001-advanced-rag-chatbot)
+- Python 3.11 (backend), TypeScript 5.0+ (frontend) + FastAPI, Docusaurus 3, React 18, better-auth (003-urdu-translate-subagents)
+- Neon Serverless Postgres, Qdrant Cloud (003-urdu-translate-subagents)
 
 ## Recent Changes
 - 001-advanced-rag-chatbot: Added Python 3.11, TypeScript 5.0+ + FastAPI, OpenAI Agents SDK, Qdrant client, Neon Postgres, React 18+

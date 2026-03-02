@@ -139,6 +139,34 @@ export const personalizeChapter = async (
   }
 };
 
+// Translate chapter content to Urdu (no auth required)
+export const translateChapter = async (
+  chapterContent: string,
+  chapterTitle: string
+): Promise<{ translated_content: string; source_language: string; target_language: string } | null> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/v1/translate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chapter_content: chapterContent,
+        chapter_title: chapterTitle,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to translate chapter');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error translating chapter:', error);
+    return null;
+  }
+};
+
 // Get personalization context for RAG
 export const getPersonalizationContext = async (): Promise<any | null> => {
   if (!isAuthenticated()) {
