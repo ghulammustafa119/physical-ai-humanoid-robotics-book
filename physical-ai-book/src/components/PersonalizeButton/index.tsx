@@ -5,7 +5,7 @@ import { personalizeChapter } from '../../utils/auth';
 import styles from './styles.module.css';
 
 export default function PersonalizeButton(): React.JSX.Element | null {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
   const [personalizedContent, setPersonalizedContent] = useState<string | null>(null);
   const [isPersonalizing, setIsPersonalizing] = useState(false);
@@ -87,9 +87,6 @@ export default function PersonalizeButton(): React.JSX.Element | null {
     setUserLevel('');
     sessionStorage.removeItem(cacheKey);
   }, [cacheKey]);
-
-  // Don't render while auth is loading
-  if (loading) return null;
 
   const handleClick = () => {
     if (!isAuthenticated) {
