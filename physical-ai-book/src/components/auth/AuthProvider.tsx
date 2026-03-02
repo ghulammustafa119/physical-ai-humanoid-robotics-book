@@ -1,17 +1,15 @@
 /**
  * Auth Provider Component
- * Manages authentication state across the application
+ * Manages authentication state using better-auth client SDK
  */
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { authClient } from '../../lib/auth-client';
 import {
-  getAuthToken,
-  getUserEmail,
   setAuthTokens,
   clearAuthTokens,
   isAuthenticated as checkIsAuthenticated,
+  getUserEmail,
   getUserProfile,
-  signOut as signOutAPI,
-  API_BASE_URL,
 } from '../../utils/auth';
 
 interface AuthContextType {
@@ -40,18 +38,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Check authentication status on mount
   useEffect(() => {
     const checkAuthStatus = async () => {
+      // First check localStorage for existing token
       if (checkIsAuthenticated()) {
         try {
           const email = getUserEmail();
           const profile = await getUserProfile();
-
-          setUser({
-            email,
-            profile,
-          });
+          setUser({ email, profile });
         } catch (error) {
           console.error('Error checking auth status:', error);
-          // If token is invalid, clear it
           clearAuthTokens();
         }
       }
@@ -65,34 +59,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setLoading(true);
 
-      const response = await fetch(`${API_BASE_URL}/api/v1/auth/signin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Support session cookies
-        body: JSON.stringify({ email, password }),
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+        fetchOptions: { credentials: 'include' },
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        let errorMsg = 'Signin failed';
-        if (typeof data.detail === 'string') {
-          errorMsg = data.detail;
-        } else if (Array.isArray(data.detail)) {
-          errorMsg = data.detail.map((e: any) => e.msg || e.message || String(e)).join(', ');
-        }
-        throw new Error(errorMsg);
+      if (error) {
+        throw new Error(error.message || 'Signin failed');
       }
 
-      // Store session token and user info
-      if (data.session && data.session.token) {
-        setAuthTokens(data.session.token, data.user.email);
-
+      if (data?.token) {
+        setAuthTokens(data.token, data.user.email);
         setUser({
           email: data.user.email,
-          profile: data.user.profile || data.user, // Fallback to user object if profile missing
+          profile: data.user,
         });
       }
 
@@ -105,34 +86,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const signUp = async (email: string, password: string, profile?: any): Promise<boolean> => {
+  const signUp = async (email: string, password: string): Promise<boolean> => {
     try {
       setLoading(true);
 
-      const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Support session cookies
-        body: JSON.stringify({ email, password }),
+      const { data, error } = await authClient.signUp.email({
+        email,
+        password,
+        name: email.split('@')[0],
+        fetchOptions: { credentials: 'include' },
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Handle FastAPI validation errors (array) and string errors
-        let errorMsg = 'Signup failed';
-        if (typeof data.detail === 'string') {
-          errorMsg = data.detail;
-        } else if (Array.isArray(data.detail)) {
-          errorMsg = data.detail.map((e: any) => e.msg || e.message || String(e)).join(', ');
-        }
-        throw new Error(errorMsg);
+      if (error) {
+        throw new Error(error.message || 'Signup failed');
       }
 
-      // Automatically sign in after signup
-      return await signIn(email, password);
+      // Store token from signup response directly
+      if (data?.token) {
+        setAuthTokens(data.token, data.user.email);
+        setUser({
+          email: data.user.email,
+          profile: data.user,
+        });
+      }
+
+      return true;
     } catch (error) {
       console.error('Sign up error:', error);
       throw error;
@@ -143,13 +121,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signOut = async () => {
     try {
-      await signOutAPI();
-      setUser(null);
+      await authClient.signOut({
+        fetchOptions: { credentials: 'include' },
+      });
     } catch (error) {
       console.error('Sign out error:', error);
-      // Still clear local state even if API call fails
-      setUser(null);
     } finally {
+      clearAuthTokens();
+      setUser(null);
       setLoading(false);
     }
   };
@@ -163,14 +142,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const email = getUserEmail();
       const profile = await getUserProfile();
-
-      setUser({
-        email,
-        profile,
-      });
+      setUser({ email, profile });
     } catch (error) {
       console.error('Error refreshing profile:', error);
-      // Don't clear tokens here to avoid infinite loops on 404/500
     }
   };
 

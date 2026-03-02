@@ -48,7 +48,32 @@ class AuthService:
         ).first()
 
         if existing_user:
-            raise ValueError("Email already registered")
+            # Check if existing account is functional (password verifiable)
+            try:
+                can_verify = self.verify_password(user_create.password, existing_user.password_hash)
+            except Exception:
+                can_verify = False
+
+            if can_verify:
+                raise ValueError("Email already registered")
+
+            # Account is corrupted (created by old buggy code) - clean up and re-register
+            # Delete profile, sessions, then user
+            from ..models.profile import UserProfile
+            profiles = self.db.exec(
+                select(UserProfile).where(UserProfile.user_id == existing_user.id)
+            ).all()
+            for p in profiles:
+                self.db.delete(p)
+
+            sessions = self.db.exec(
+                select(SessionModel).where(SessionModel.user_id == existing_user.id)
+            ).all()
+            for s in sessions:
+                self.db.delete(s)
+
+            self.db.delete(existing_user)
+            self.db.commit()
 
         # Hash the password
         hashed_password = self.hash_password(user_create.password)

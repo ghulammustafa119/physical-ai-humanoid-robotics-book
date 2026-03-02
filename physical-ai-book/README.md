@@ -1,55 +1,96 @@
 # Physical AI & Humanoid Robotics Book
 
-This repository contains an AI-native book focusing on Physical AI and Humanoid Robotics with an integrated RAG (Retrieval-Augmented Generation) chatbot. The book covers end-to-end systems from AI development through simulation to real-world robotics deployment, emphasizing architecture-first and systems thinking approaches.
+An AI-native interactive book on Physical AI and Humanoid Robotics, built with Docusaurus and powered by an Advanced RAG chatbot. Features user authentication via [better-auth](https://www.better-auth.com/), personalized content based on user profiles, and AI-driven chapter explanations.
 
-## Project Overview
+**Live:** [ghulammustafa119.github.io/physical-ai-humanoid-robotics-book](https://ghulammustafa119.github.io/physical-ai-humanoid-robotics-book/)
 
-Physical AI represents a paradigm shift from software-only AI to embodied, multimodal intelligence that interacts with the physical world. This book addresses the critical gap between large language models and real-world robotics by demonstrating how Vision-Language-Action (VLA) systems can create truly intelligent agents.
+## Tech Stack
 
-## Installation
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Docusaurus 3, React 18, TypeScript |
+| Authentication | better-auth client SDK |
+| Backend | FastAPI (Python 3.11) |
+| AI/LLM | OpenAI Agents SDK, Cohere, Gemini |
+| Vector DB | Qdrant Cloud |
+| Database | Neon Serverless Postgres |
+| Hosting | GitHub Pages (frontend), Hugging Face Spaces (backend) |
 
-```bash
-npm install
+## Features
+
+- **Advanced RAG Chatbot** — Ask questions about any chapter and get AI-generated answers grounded in book content
+- **User Authentication** — Sign up / sign in via better-auth with session management
+- **Personalized Content** — Per-chapter personalization based on user's programming level, hardware, and experience
+- **Interactive Book** — Full Docusaurus-powered documentation site with search, navigation, and dark mode
+
+## Project Structure
+
+```
+physical-ai-book/          # Frontend (Docusaurus)
+├── src/
+│   ├── components/        # React components (auth, chat, personalize)
+│   ├── lib/auth-client.ts # better-auth client instance
+│   ├── utils/auth.ts      # Auth utilities and API helpers
+│   └── theme/             # Swizzled Docusaurus theme components
+├── docs/                  # Book content (Markdown)
+└── docusaurus.config.ts
+
+backend/                   # Backend (FastAPI)
+├── src/
+│   ├── api/v1/            # API routes (chat, auth, personalize, book-content)
+│   ├── services/          # Business logic (auth, RAG, AI)
+│   ├── models/            # SQLModel database models
+│   └── config/            # Settings and configuration
 ```
 
-## Local Development
+## Getting Started
+
+### Frontend
 
 ```bash
+cd physical-ai-book
+npm install
 npm run start
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-## Build
+### Backend
 
 ```bash
-npm run build
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn src.api.main:app --reload
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+### Environment Variables (Backend)
 
-## Book Structure
+Create a `.env` file in the `backend/` directory:
+
+```env
+DATABASE_URL=postgresql://...
+QDRANT_URL=https://...
+QDRANT_API_KEY=...
+OPENAI_API_KEY=...
+COHERE_API_KEY=...
+GEMINI_API_KEY=...
+```
+
+## Book Modules
 
 ### Module 1: ROS 2 — Robotic Nervous System
-- Distributed computing framework for robotics
-- Message passing and service architecture
-- Node management and communication patterns
-- Real-world deployment strategies
+Distributed computing framework, message passing, node management, and deployment strategies.
 
 ### Module 2: Simulation (Gazebo Primary)
-- Gazebo as primary digital twin platform
-- Physics-based simulation environments
-- Sensor integration and visualization
-- Unity as optional future enhancement
+Digital twin platform, physics-based simulation, sensor integration, and visualization.
 
 ### Module 3: NVIDIA Isaac & Physics-Based Learning
-- AI-robot brain architecture
-- Perception systems and sensor fusion
-- Physics-informed learning approaches
-- Control systems and action planning
+AI-robot brain architecture, perception systems, physics-informed learning, and control systems.
 
 ### Module 4: Vision-Language-Action (VLA)
-- Multimodal intelligence systems
-- End-to-end learning architectures
-- Real-world interaction patterns
-- Embodied AI principles
+Multimodal intelligence, end-to-end learning architectures, and embodied AI principles.
+
+## Deployment
+
+- **Frontend:** Auto-deploys to GitHub Pages on push to `main`
+- **Backend:** Deployed on Hugging Face Spaces at `ghulammustafabhutto/gmbhutto`

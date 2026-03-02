@@ -1,13 +1,10 @@
 /**
- * Better Auth Client Integration Utilities
- * Handles authentication state management and API communication with Better Auth
+ * Auth Utilities
+ * Handles localStorage token management and API communication
  */
+import { authClient, API_BASE_URL } from '../lib/auth-client';
 
-// API Base URL configuration
-export const API_BASE_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://ghulammustafabhutto-gmbhutto.hf.space' // Hugging Face Backend URL
-    : 'http://localhost:8000';
+export { API_BASE_URL };
 
 // Get auth token from localStorage
 export const getAuthToken = (): string | null => {
@@ -96,27 +93,14 @@ export const updateUserProfile = async (profileData: Partial<any>): Promise<any>
   }
 };
 
-// Sign out user
+// Sign out user via better-auth client
 export const signOut = async (): Promise<void> => {
-  const token = getAuthToken();
-
-  if (!token) {
-    clearAuthTokens();
-    return;
-  }
-
   try {
-    await fetch(`${API_BASE_URL}/api/v1/auth/signout`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include', // Support session cookies
+    await authClient.signOut({
+      fetchOptions: { credentials: 'include' },
     });
   } catch (error) {
     console.error('Error during signout:', error);
-    // Even if API call fails, clear local tokens
   } finally {
     clearAuthTokens();
   }
