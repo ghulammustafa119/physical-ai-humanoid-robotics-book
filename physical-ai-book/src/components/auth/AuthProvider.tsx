@@ -95,7 +95,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setLoading(true);
 
-      const { data, error } = await authClient.signUp.email({
+      const { error } = await authClient.signUp.email({
         email,
         password,
         name: email.split('@')[0],
@@ -111,16 +111,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error(msg);
       }
 
-      // Store token from signup response directly
-      if (data?.token) {
-        setAuthTokens(data.token, data.user.email);
-        setUser({
-          email: data.user.email,
-          profile: data.user,
-        });
-      }
-
-      return true;
+      // Auto sign-in after successful signup
+      setLoading(false);
+      return await signIn(email, password);
     } catch (error) {
       console.error('Sign up error:', error);
       throw error;
