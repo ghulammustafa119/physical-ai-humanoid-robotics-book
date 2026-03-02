@@ -66,7 +66,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
 
       if (error) {
-        throw new Error(error.message || 'Signin failed');
+        const msg = (error as any).body?.error?.message
+          || error.message
+          || 'Signin failed';
+        throw new Error(msg);
       }
 
       if (data?.token) {
@@ -98,7 +101,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
 
       if (error) {
-        throw new Error(error.message || 'Signup failed');
+        const msg = (error as any).body?.error?.message
+          || error.message
+          || 'Signup failed';
+        throw new Error(msg);
       }
 
       // Store token from signup response directly
