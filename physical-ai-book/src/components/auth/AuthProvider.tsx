@@ -111,9 +111,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error(msg);
       }
 
-      // Auto sign-in after successful signup
-      setLoading(false);
-      return await signIn(email, password);
+      return true;
     } catch (error) {
       console.error('Sign up error:', error);
       throw error;

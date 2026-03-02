@@ -99,8 +99,8 @@ const SignUp: React.FC = () => {
       const success = await signUp(formData.email, formData.password, profileData);
 
       if (success) {
-        // Signed in automatically after signup, redirect to home
-        window.location.href = '/physical-ai-humanoid-robotics-book/';
+        // Redirect to sign in page after successful signup
+        window.location.href = '/physical-ai-humanoid-robotics-book/signin?registered=true';
       } else {
         setError('Signup failed. Please try again.');
       }

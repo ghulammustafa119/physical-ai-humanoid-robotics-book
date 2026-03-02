@@ -16,6 +16,10 @@ const SignIn: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Check if user just registered
+  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const justRegistered = params?.get('registered') === 'true';
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -43,8 +47,8 @@ const SignIn: React.FC = () => {
       const success = await signIn(formData.email, formData.password);
 
       if (success) {
-        // Redirect to profile or home page after successful signin
-        window.location.href = '/physical-ai-humanoid-robotics-book/profile';
+        // Redirect to home page after successful signin
+        window.location.href = '/physical-ai-humanoid-robotics-book/';
       } else {
         setError('Signin failed. Please check your credentials and try again.');
       }
@@ -58,6 +62,7 @@ const SignIn: React.FC = () => {
   return (
     <div className={styles.authContainer}>
       <h2>Sign In</h2>
+      {justRegistered && <div className={styles.success}>Account created successfully! Please sign in.</div>}
       {error && <div className={styles.error}>{error}</div>}
 
       <form onSubmit={handleSubmit} className={styles.authForm}>
