@@ -1,19 +1,47 @@
+# Dependencies
 node_modules/
-__server/
-hackathon_env/
+
+# Virtual environments
 venv/
 venv_*/
+.venv/
+hackathon_env/
 backend/venv/
 backend/venv_*/
-backend/physical-ai-book/
-markdown-page/
+backend/.venv/
+
+# Build artifacts
 dist/
 build/
+__server/
+
+# Python
 *.pyc
 __pycache__/
 .pytest_cache/
 .coverage
-credentials/
+
+# Environment files (secrets!)
 .env
-*.env
+.env.*
 !.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Credentials
+credentials/
+
+# IDE / local settings
+.claude/settings.local.json
+
+# Docusaurus
+.docusaurus/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Duplicate book content in backend
+backend/physical-ai-book/
+markdown-page/

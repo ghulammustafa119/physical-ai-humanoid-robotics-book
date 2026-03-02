@@ -5,6 +5,7 @@ from .v1.chat import router as chat_router
 from .v1.text_selection import router as text_selection_router
 from .v1.book_content import router as book_content_router
 from .v1.auth import router as auth_router
+from .v1.personalize import router as personalize_router
 from ..config.settings import settings
 
 
@@ -61,6 +62,12 @@ def create_app() -> FastAPI:
         book_content_router,
         prefix=settings.api_v1_prefix,
         tags=["book-content"]
+    )
+
+    app.include_router(
+        personalize_router,
+        prefix=settings.api_v1_prefix,
+        tags=["personalization"]
     )
 
     @app.get("/")

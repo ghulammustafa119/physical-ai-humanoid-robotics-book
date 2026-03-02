@@ -1,11 +1,14 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException, status, Header, Request
+from fastapi.responses import JSONResponse
 from sqlmodel import Session
 from typing import Optional
+from datetime import datetime, timedelta
 from ...db.dependency import get_db_session
 from ...models.user import UserCreate, UserResponse, UserLogin
 from ...models.profile import UserProfileCreate, UserProfileResponse, UserProfileUpdate
 from ...services.auth_service import AuthService
-from datetime import datetime
+from ...config.settings import settings
 
 
 router = APIRouter()
@@ -23,27 +26,37 @@ async def signup(
         auth_service = AuthService(db)
         user_response, session_token = auth_service.create_user(user_create)
 
-        response_data = user_response.dict()
+        expires_at = datetime.utcnow() + timedelta(days=7)
 
-        from fastapi import Response
-        response = Response(content=None, status_code=status.HTTP_201_CREATED)
+        user_dict = user_response.dict()
+        user_dict["created_at"] = user_dict["created_at"].isoformat()
+        user_dict["updated_at"] = user_dict["updated_at"].isoformat()
+
+        response_data = {
+            "user": user_dict,
+            "session": {
+                "token": session_token,
+                "expires_at": expires_at.isoformat()
+            },
+            "profile_completeness": 0.0
+        }
+
+        json_response = JSONResponse(
+            content=response_data,
+            status_code=status.HTTP_201_CREATED,
+        )
 
         # Set session cookie for cross-domain auth
-        response.set_cookie(
+        json_response.set_cookie(
             key="session_token",
             value=session_token,
             httponly=True,
             secure=True,
             samesite="none",
-            expires=7 * 24 * 60 * 60, # 7 days
+            max_age=7 * 24 * 60 * 60,  # 7 days
         )
 
-        from fastapi.responses import JSONResponse
-        return JSONResponse(
-            content=response_data,
-            headers=dict(response.headers),
-            status_code=status.HTTP_201_CREATED
-        )
+        return json_response
     except ValueError as e:
         # Email already exists
         raise HTTPException(
@@ -76,41 +89,36 @@ async def signin(
 
     user_response, session_token = result
 
-    # Calculate expiry properly using timedelta
-    from datetime import timedelta
     expires_at = datetime.utcnow() + timedelta(days=7)
 
+    user_dict = user_response.dict()
+    user_dict["created_at"] = user_dict["created_at"].isoformat()
+    user_dict["updated_at"] = user_dict["updated_at"].isoformat()
+
     response_data = {
-        "user": user_response,
+        "user": user_dict,
         "session": {
             "token": session_token,
-            "expires_at": expires_at
+            "expires_at": expires_at.isoformat()
         },
         "profile_completeness": 0.0
     }
 
-    from fastapi import Response
-    response = Response(content=None, status_code=status.HTTP_200_OK)
+    json_response = JSONResponse(
+        content=response_data,
+    )
 
     # Set session cookie for cross-domain auth
-    # secure=True and samesite="none" are required for cross-site cookies over HTTPS
-    is_prod = settings.environment == "production" or os.environ.get("ENVIRONMENT") == "production"
-
-    response.set_cookie(
+    json_response.set_cookie(
         key="session_token",
         value=session_token,
         httponly=True,
-        secure=True, # Always True if we are on HF Spaces (HTTPS)
+        secure=True,
         samesite="none",
-        expires=timedelta(days=7).total_seconds(),
+        max_age=7 * 24 * 60 * 60,  # 7 days
     )
 
-    # We still return the JSON for clients using localStorage as fallback
-    from fastapi.responses import JSONResponse
-    return JSONResponse(
-        content=response_data,
-        headers=dict(response.headers)
-    )
+    return json_response
 
 
 @router.post("/auth/signout")

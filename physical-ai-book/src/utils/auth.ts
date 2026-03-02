@@ -122,6 +122,39 @@ export const signOut = async (): Promise<void> => {
   }
 };
 
+// Personalize chapter content based on user profile
+export const personalizeChapter = async (
+  chapterContent: string,
+  chapterTitle: string
+): Promise<{ personalized_content: string; user_level: string } | null> => {
+  const token = getAuthToken();
+  if (!token) return null;
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/v1/personalize`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        chapter_content: chapterContent,
+        chapter_title: chapterTitle,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to personalize chapter');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error personalizing chapter:', error);
+    return null;
+  }
+};
+
 // Get personalization context for RAG
 export const getPersonalizationContext = async (): Promise<any | null> => {
   if (!isAuthenticated()) {
