@@ -50,8 +50,9 @@ async def better_auth_signup(
 
         expires_at = datetime.utcnow() + timedelta(days=7)
 
-        # Return in better-auth expected format
+        # Return in better-auth expected format (token at top level for SDK)
         response_data = {
+            "token": session_token,
             "user": {
                 "id": user_response.id,
                 "email": user_response.email,
@@ -117,6 +118,7 @@ async def better_auth_signin(
     expires_at = datetime.utcnow() + timedelta(days=7)
 
     response_data = {
+        "token": session_token,
         "user": {
             "id": user_response.id,
             "email": user_response.email,
