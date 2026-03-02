@@ -74,11 +74,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error(msg);
       }
 
-      if (data?.token) {
-        setAuthTokens(data.token, data.user.email);
+      // Extract token — SDK may return it as data.token or nested in session
+      const dataAny = data as any;
+      const token = dataAny?.token || dataAny?.session?.token;
+      const userEmail = dataAny?.user?.email;
+
+      if (token && userEmail) {
+        setAuthTokens(token, userEmail);
         setUser({
-          email: data.user.email,
-          profile: data.user,
+          email: userEmail,
+          profile: dataAny.user,
         });
       }
 
