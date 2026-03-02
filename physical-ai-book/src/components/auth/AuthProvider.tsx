@@ -99,7 +99,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return true;
     } catch (error) {
       console.error('Sign in error:', error);
-      return false;
+      throw error;
     } finally {
       setLoading(false);
     }
