@@ -59,7 +59,6 @@ class AuthService:
 
             # Account is corrupted (created by old buggy code) - clean up and re-register
             # Delete profile, sessions, then user
-            from ..models.profile import UserProfile
             profiles = self.db.exec(
                 select(UserProfile).where(UserProfile.user_id == existing_user.id)
             ).all()
