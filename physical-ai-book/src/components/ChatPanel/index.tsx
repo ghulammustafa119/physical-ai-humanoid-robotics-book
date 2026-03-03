@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../auth/AuthProvider';
+import { API_BASE_URL } from '../../utils/auth';
 import styles from './styles.module.css';
 
 interface Message {
@@ -42,7 +43,7 @@ export default function ChatPanel(): JSX.Element {
       if (user) {
         try {
           // Fetch personalization context from the API
-          const profileResponse = await fetch('http://localhost:8000/api/v1/auth/profile', {
+          const profileResponse = await fetch(`${API_BASE_URL}/api/v1/auth/profile`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
@@ -70,7 +71,7 @@ export default function ChatPanel(): JSX.Element {
         }
       }
 
-      const response = await fetch('http://localhost:8000/api/v1/chat', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
