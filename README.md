@@ -1,64 +1,73 @@
 # Physical AI & Humanoid Robotics — AI-Native Book with Integrated RAG Chatbot
 
-This project is an AI-native book focusing on Physical AI and Humanoid Robotics with an integrated RAG (Retrieval-Augmented Generation) chatbot. The book covers end-to-end systems from AI development through simulation to real-world robotics deployment.
+An AI-native interactive textbook on Physical AI and Humanoid Robotics with an integrated RAG chatbot, Urdu translation, personalized learning, and Claude Code agent skills.
+
+## Live Demo
+
+- **Book**: [ghulammustafa119.github.io/physical-ai-humanoid-robotics-book](https://ghulammustafa119.github.io/physical-ai-humanoid-robotics-book/)
+- **Backend API**: [ghulammustafabhutto-gmbhutto.hf.space](https://ghulammustafabhutto-gmbhutto.hf.space/)
+
+## Technology Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Docusaurus 3, React 18, TypeScript 5.0+ |
+| Backend | FastAPI, Python 3.11 |
+| Authentication | Better Auth (signup, signin, sessions) |
+| Database | Neon Serverless Postgres |
+| Vector DB | Qdrant Cloud |
+| AI Services | Cohere (primary), Gemini, OpenAI (fallback) |
+| Deployment | GitHub Pages (frontend), Hugging Face Spaces (backend) |
+| Methodology | Spec-Driven Development (SDD) via Spec-Kit Plus |
+
+## Features
+
+- **16 Chapters** across 4 modules covering ROS 2, Gazebo, NVIDIA Isaac, and VLA
+- **RAG Chatbot** — Ask questions about book content with source attribution
+- **Translate to Urdu** — One-click Urdu translation on every chapter (no login required)
+- **Personalized Learning** — Content adapts to your programming, AI/ML, and robotics experience
+- **User Authentication** — Sign up, sign in, and profile-based personalization
+- **Claude Code Agent Skills** — 5 reusable skills for book development automation
+
+## Claude Code Agent Skills
+
+| Skill | Command | Description |
+|-------|---------|-------------|
+| Book Chapter | `/book-chapter` | Generate chapter outlines and content from learning objectives |
+| Book Translate | `/book-translate` | Translate content to Urdu with technical term preservation |
+| Book Personalize | `/book-personalize` | Adapt content for beginner/intermediate/advanced readers |
+| RAG Index | `/rag-index` | Index book content into Qdrant vector DB |
+| Book Review | `/book-review` | Review content for technical accuracy and code validity |
 
 ## Project Structure
 
 ```
-├── .specify/                 # Spec-Kit Plus configuration
-├── specs/                    # Specifications for all features
-│   ├── book/                 # Book content specifications
-│   ├── rag/                  # RAG chatbot specifications
-│   ├── ros2/                 # ROS 2 module specifications
-│   ├── gazebo/               # Gazebo simulation specifications
-│   ├── nvidia_isaac/         # NVIDIA Isaac specifications
-│   └── vla/                  # Vision-Language-Action specifications
-├── docs/                     # Docusaurus documentation site
-│   ├── intro.md              # Introduction page
-│   ├── ros2/chapters/        # Module 1: ROS 2 chapters (1-4)
-│   ├── gazebo/chapters/      # Module 2: Gazebo & Unity chapters (1-4)
-│   ├── isaac/chapters/       # Module 3: NVIDIA Isaac chapters (1-4)
-│   └── vla/chapters/         # Module 4: Vision-Language-Action chapters (1-4)
-├── backend/                  # FastAPI backend for RAG system
-├── history/                  # Prompt History Records and ADRs
-└── package.json              # Frontend dependencies (Docusaurus)
-└── requirements.txt          # Backend dependencies (FastAPI)
-└── sidebars.js               # Navigation configuration
+├── physical-ai-book/           # Docusaurus frontend
+│   ├── docs/                   # Book chapters (4 modules × 4 chapters)
+│   └── src/
+│       ├── components/
+│       │   ├── ChatPanel/      # RAG chatbot UI
+│       │   ├── PersonalizeButton/ # Content personalization
+│       │   ├── TranslateButton/   # Urdu translation
+│       │   └── auth/           # SignIn, SignUp, AuthProvider
+│       ├── utils/auth.ts       # API utilities
+│       └── theme/DocItem/      # Swizzled layout (inject buttons)
+├── backend/                    # FastAPI backend
+│   └── src/
+│       ├── api/v1/             # Endpoints: chat, translate, personalize, auth
+│       ├── services/           # Cohere, Gemini, OpenAI, Qdrant, Auth
+│       └── config/             # Settings, database
+├── .claude/commands/           # Claude Code agent skills (5 skills)
+├── specs/                      # Feature specifications (SDD)
+└── history/                    # Prompt History Records
 ```
 
-## Features
-
-- **Complete Book Content**: 4 comprehensive modules with 4 chapters each (16 total chapters)
-- **Module 1**: The Robotic Nervous System (ROS 2) - Understanding ROS 2 as the middleware backbone
-- **Module 2**: The Digital Twin (Gazebo & Unity) - Physics simulation and high-fidelity visualization
-- **Module 3**: AI-Robot Brain (NVIDIA Isaac™) - AI decision-making systems for humanoid robots
-- **Module 4**: Vision-Language-Action (VLA) - Connecting perception to action execution
-- **Interactive RAG Chatbot**: Ask questions about book content with source attribution
-- **User Authentication & Personalization**: Sign up, sign in, and personalized learning experience based on user background
-- **Background-Aware Learning**: System adapts content and responses based on user's programming, AI/ML, robotics experience, and hardware access
-- **Proper Docusaurus Integration**: Full navigation, proper frontmatter, and optimized for search
-- **RAG-Ready Content**: Structured for semantic search and retrieval-augmented generation
-- **Code Examples**: All examples in Python with proper formatting and explanations
-
-## Technology Stack
-
-- **Platform**: Docusaurus v3.1.0
-- **Deployment**: GitHub Pages
-- **Backend**: FastAPI + Python 3.11+
-- **Authentication**: Better Auth for user management and session handling
-- **Database**: Neon Serverless Postgres
-- **Vector DB**: Qdrant Cloud
-- **AI Model**: Cohere API (command-r-08-2024)
-- **Spec Framework**: Spec-Kit Plus
-- **Primary Language**: Python, with TypeScript for frontend
-- **Chat UI**: React + TypeScript integrated into Docusaurus
-
-## Book Modules Overview
+## Book Modules
 
 ### Module 1: The Robotic Nervous System (ROS 2)
 - Chapter 1: ROS 2 as the Robotic Nervous System
-- Chapter 2: ROS 2 Communication Primitives (nodes, topics, services, actions)
-- Chapter 3: Bridging Python AI Agents to ROS 2 Controllers
+- Chapter 2: ROS 2 Communication Primitives
+- Chapter 3: Bridging Python AI Agents to ROS 2
 - Chapter 4: Modeling Humanoid Robots with URDF
 
 ### Module 2: The Digital Twin (Gazebo & Unity)
@@ -67,7 +76,7 @@ This project is an AI-native book focusing on Physical AI and Humanoid Robotics 
 - Chapter 3: Unity for High-Fidelity Interaction
 - Chapter 4: Bridging Gazebo and Unity
 
-### Module 3: AI-Robot Brain (NVIDIA Isaac™)
+### Module 3: AI-Robot Brain (NVIDIA Isaac)
 - Chapter 1: What Is an AI-Robot Brain?
 - Chapter 2: Perception in Physical AI Systems
 - Chapter 3: Planning & Decision Making
@@ -85,146 +94,65 @@ This project is an AI-native book focusing on Physical AI and Humanoid Robotics 
 
 - Python 3.11+
 - Node.js 18+ and npm
-- Cohere API key (free tier available at https://cohere.com/)
+- API keys: Cohere, Neon Postgres, Qdrant Cloud
 
 ### Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd hackathon_book
-   ```
-
-2. **Install frontend dependencies**:
-   ```bash
-   cd physical-ai-book
-   npm install
-   ```
-
-3. **Install backend dependencies**:
-   ```bash
-   cd ../backend
-   python -m venv venv_simple
-   source venv_simple/bin/activate  # On Windows: venv_simple\Scripts\activate
-   pip install fastapi uvicorn pydantic pydantic-settings cohere python-dotenv
-   ```
-
-4. **Configure environment variables**:
-   ```bash
-   cd backend
-   cp .env.example .env
-   # Edit .env and add your API keys:
-   # - COHERE_API_KEY=your_cohere_api_key
-   # - DATABASE_URL=your_neon_postgres_url
-   # - QDRANT_URL=your_qdrant_cloud_url
-   # - QDRANT_API_KEY=your_qdrant_api_key
-   ```
-
-### Running the Application
-
-1. **Start the backend server** (Terminal 1):
-   ```bash
-   cd backend
-   source venv_simple/bin/activate
-   python main.py
-   # Backend will run on http://localhost:8000
-   ```
-
-2. **Start the Docusaurus frontend** (Terminal 2):
-   ```bash
-   cd physical-ai-book
-   npm start
-   # Frontend will run on http://localhost:3000
-   ```
-
-3. **Access the application**:
-   - Open browser: `http://localhost:3000/physical-ai-humanoid-robotics-book/`
-   - Look for the purple chat button in the bottom-right corner
-   - Click to open the AI chat assistant
-   - Ask questions about robotics, ROS 2, or book content
-
-4. **Using Authentication & Personalization**:
-   - Click "Sign Up" or "Sign In" in the top navigation bar
-   - Create an account and fill in your background information (programming level, AI/ML experience, hardware access, etc.)
-   - Your profile will be used to personalize chatbot responses and content recommendations
-   - Access your profile page to update your background information at any time
-
-### Testing the Chat API
-
-Test the backend directly:
 ```bash
+# Clone
+git clone git@github.com:ghulammustafa119/physical-ai-humanoid-robotics-book.git
+cd physical-ai-humanoid-robotics-book
+
+# Frontend
+cd physical-ai-book && npm install
+
+# Backend
+cd ../backend
+python -m venv venv_simple
+source venv_simple/bin/activate
+pip install -r requirements.txt
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your API keys
+```
+
+### Running Locally
+
+```bash
+# Terminal 1 — Backend
+cd backend && source venv_simple/bin/activate && python main.py
+# → http://localhost:8000
+
+# Terminal 2 — Frontend
+cd physical-ai-book && npm start
+# → http://localhost:3000/physical-ai-humanoid-robotics-book/
+```
+
+### Testing the APIs
+
+```bash
+# Chat
 curl -X POST http://localhost:8000/api/v1/chat \
   -H "Content-Type: application/json" \
-  -d '{"query":"What is ROS 2?"}'
+  -d '{"query": "What is ROS 2?"}'
+
+# Translate
+curl -X POST http://localhost:8000/api/v1/translate \
+  -H "Content-Type: application/json" \
+  -d '{"chapter_content": "Robots use sensors.", "chapter_title": "Intro"}'
 ```
 
 ## Development Workflow
 
-This project follows Spec-Driven Development (SDD) methodology:
+This project follows **Spec-Driven Development (SDD)**:
 
-1. **Specification**: Define requirements in `specs/<feature>/spec.md`
-2. **Planning**: Create architectural plans in `specs/<feature>/plan.md`
-3. **Tasks**: Break down implementation in `specs/<feature>/tasks.md`
-4. **Implementation**: Code and test following the specifications
-5. **Documentation**: Update documentation and create PHRs
-
-## Content Structure
-
-All book content is properly integrated with:
-- YAML frontmatter (title, description, sidebar_position)
-- Proper heading hierarchy for RAG-friendly chunking
-- Correctly formatted Python code blocks
-- Sequential sidebar positioning for navigation
-- Self-contained chapters without forward references
-
-Backend RAG ingests content from a mirrored docs directory for clean separation from frontend book build.
-
-## Troubleshooting
-
-### Backend Issues
-
-**Problem**: `ModuleNotFoundError: No module named 'cohere'`
-- **Solution**: Make sure you activated the virtual environment and installed dependencies:
-  ```bash
-  cd backend
-  source venv_simple/bin/activate
-  pip install cohere
-  ```
-
-**Problem**: `404 error: model 'command-r' was removed`
-- **Solution**: Update your `.env` file to use the new model:
-  ```env
-  COHERE_MODEL=command-r-08-2024
-  ```
-  Then restart the backend server.
-
-**Problem**: Chat button not appearing
-- **Solution**: Clear browser cache and ensure Docusaurus rebuilt:
-  ```bash
-  cd physical-ai-book
-  rm -rf .docusaurus build
-  npm start
-  ```
-
-**Problem**: CORS errors in browser console
-- **Solution**: Ensure backend is running on port 8000 and `ALLOWED_ORIGINS=*` in `.env`
-
-### Getting API Keys
-
-- **Cohere**: Sign up at https://cohere.com/ for free tier (1000 calls/month)
-- **Qdrant Cloud**: Sign up at https://cloud.qdrant.io/ for free tier
-- **Neon Postgres**: Sign up at https://neon.tech/ for free serverless database
-
-## Contributing
-
-1. Create feature branch from `main`
-2. Follow the SDD workflow (spec → plan → tasks → implement)
-3. Create Prompt History Records (PHRs) for all significant changes
-4. Submit pull request with clear description of changes
+1. `/sp.specify` — Define feature requirements
+2. `/sp.plan` — Create implementation plan
+3. `/sp.tasks` — Break down into testable tasks
+4. `/sp.implement` — Execute the plan
+5. `/sp.analyze` — Cross-artifact quality check
 
 ## License
 
 This project is licensed under the terms specified in the repository.
-
-<!-- Trigger GitHub Actions rebuild -->
-<!-- New trigger for deployment -->
